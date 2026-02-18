@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>gioShop | Acesso</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/stylelogin.css')}}">
+</head>
+
+<body class="overflow-hidden">
+
+    <div class="decorative-blob bg-primary" style="width: 300px; height: 300px; top: -100px; right: -100px;"></div>
+    <div class="decorative-blob bg-info" style="width: 250px; height: 250px; bottom: -50px; left: -50px;"></div>
+
+    <div class="container vh-100 d-flex align-items-center justify-content-center">
+        <div class="row w-100 justify-content-center">
+
+            <div class="col-12 col-md-6 col-lg-4">
+
+                <div class="text-center mb-5">
+                    <img src="{{url_for('static', filename='img/logo.png')}}" style="max-width: 90px;" alt="gioShop">
+                    <h2 class="fw-bold mt-4 h4">Acesse sua loja</h2>
+                    <p class="text-muted">Gerencie seu negócio de qualquer lugar.</p>
+                </div>
+
+                <div class="card login-card shadow-sm p-3">
+                    <div class="card-body">
+                        <form action="" method="post">
+                            {{ form.csrf_token }}
+
+                            <div class="mb-4">
+                                {{ form.telefone(class="form-control", placeholder="Seu telefone") }}
+                            </div>
+
+                            <div class="mb-2">
+                                {{ form.senha(class="form-control", placeholder="Sua senha") }}
+                            </div>
+                            <div class="d-grid mb-4">
+                                {{ form.btn(class="btn btn-primary btn-login") }}
+                            </div>
+
+                            <div class="text-center pt-2">
+                                <p class="small text-muted mb-0">Novo por aqui?</p>
+                                <a href="{{url_for('create')}}" class="text-primary fw-bold text-decoration-none">Crie
+                                    sua conta agora</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="text-center mt-5">
+                    <small class="text-muted text-uppercase fw-bold ls-1" style="font-size: 10px; letter-spacing: 2px;">
+                        gioShop &copy; 2026 - Digital Commerce
+                    </small>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

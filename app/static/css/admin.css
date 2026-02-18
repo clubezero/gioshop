@@ -1,0 +1,24 @@
+.admin-sidebar {
+    min-height: 100vh;
+    background: #1e293b;
+    color: white;
+}
+
+.admin-card {
+    border: none;
+    border-radius: 15px;
+    background: #fff;
+    transition: transform 0.2s;
+}
+
+.admin-card:hover {
+    transform: translateY(-5px);
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}

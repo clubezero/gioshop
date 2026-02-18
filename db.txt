@@ -1,0 +1,153 @@
+1. Diagrama de Tabelas e Relacionamentos
+A. Tabela User (O Coração)
+
+    id: Primary Key.
+
+    nome, email, password_hash.
+
+    motor_level: Inteiro (0 a 5).
+
+    balance: Float (Saldo disponível para saque).
+
+    referral_code: Para sistema de convites (opcional).
+
+B. Tabela Motor_Level (Configurações)
+
+Esta tabela armazena as regras que você definiu.
+
+    level: PK (0, 1, 2, 3, 4, 5).
+
+    name: (Motor Zero, Impulso, Turbo, etc).
+
+    cost: (0, 2000, 3500, 5000, 6500, 7000).
+
+    yield_rate: 0.75 (os 75%).
+
+    cycle_days: 10.
+
+C. Tabela Investment (Os Ciclos de 10 dias)
+
+Relaciona o Usuário ao lucro que está rendendo.
+
+    id: PK.
+
+    user_id: Foreign Key (User.id).
+
+    amount: Valor investido.
+
+    expected_return: Valor investido * 1.75.
+
+    start_date: Data do pagamento.
+
+    end_date: start_date + 10 dias.
+
+    status: (Ativo, Concluído, Resgatado).
+
+D. Tabela Product (Marketplace)
+
+    id: PK.
+
+    name, description, price.
+
+    image_url, category.
+
+E. Tabela Transaction (Histórico Financeiro)
+
+Para o "Extrato" que discutimos no menu.
+
+    id: PK.
+
+    user_id: FK (User.id).
+
+    type: (Depósito, Saque, Lucro de Ciclo).
+
+    amount: Valor.
+
+    status: (Pendente, Concluído, Rejeitado).
+
+    created_at: Data e hora.
+
+2. Como as tabelas se relacionam?
+
+Para um engenheiro, a lógica de "Vetor de Dados" é clara:
+
+    Um Usuário para Muitos Investimentos (1:N): Um usuário pode ter vários ciclos de 10 dias acontecendo ou históricos de ciclos passados.
+
+    Um Usuário para Muitas Transações (1:N): Cada vez que o usuário move 1 Kz, isso gera um registro na tabela de transações ligado ao ID dele.
+
+    Muitos Usuários para Um Nível de Motor (N:1): Vários usuários podem estar no "Nível 3 (Fusão)". O banco de dados consulta a tabela Motor_Level para saber quanto cada
+
+
+
+
+
+
+    class saqueModel(base.Model):
+    id = base.Column(base.Integer, primary_key=True)
+
+
+class saqueModel(base.Model):
+    id = base.Column(base.Integer, primary_key=True)
+
+
+
+
+from datetime import datetime, timedelta
+
+class User(base.Model):
+    id = base.Column(base)
+    username = base.Column(base.String(80), nullable=False)
+    motor_level = base.Column(base.Integer, default=0) # 0 a 5
+    balance = base.Column(base.Float, default=0.0)
+    
+    # Relacionamentos
+    investments = base.relationship('Investment', backref='owner', lazy=True)
+    transactions = base.relationship('Transaction', backref='user', lazy=True)
+
+from datetime import datetime, timedelta
+
+class User(base.Model):
+    id = base.Column(base.Integer, primary_key=True)
+    username = base.Column(base.String(80), nullable=False)
+    motor_level = base.Column(base.Integer, default=0) # 0 a 5
+    balance = base.Column(base.Float, default=0.0)
+    
+    # Relacionamentos
+    investments = base.relationship('Investment', backref='owner', lazy=True)
+    transactions = base.relationship('Transaction', backref='user', lazy=True)
+
+class Investment(base.Model):
+    id = base.Column(base.Integer, primary_key=True)
+    user_id = base.Column(base.Integer, base.ForeignKey('user.id'))
+    amount = base.Column(base.Float, nullable=False)
+    date_start = base.Column(base.DateTime, default=datetime.utcnow)
+    date_end = base.Column(base.DateTime, default=lambda: datetime.utcnow() + timedelta(days=10))
+    active = base.Column(base.Boolean, default=True)
+
+    def calculate_yield(self):
+        return self.amount * 1.75
+    
+
+
+from datetime import datetime, timedelta
+
+class User(base.Model):
+    id = base.Column(base.Integer, primary_key=True)
+    username = base.Column(base.String(80), nullable=False)
+    motor_level = base.Column(base.Integer, default=0) # 0 a 5
+    balance = base.Column(base.Float, default=0.0)
+    
+    # Relacionamentos
+    investments = base.relationship('Investment', backref='owner', lazy=True)
+    transactions = base.relationship('Transaction', backref='user', lazy=True)
+
+class Investment(base.Model):
+    id = base.Column(base.Integer, primary_key=True)
+    user_id = base.Column(base.Integer, base.ForeignKey('user.id'))
+    amount = base.Column(base.Float, nullable=False)
+    date_start = base.Column(base.DateTime, default=datetime.utcnow)
+    date_end = base.Column(base.DateTime, default=lambda: datetime.utcnow() + timedelta(days=10))
+    active = base.Column(base.Boolean, default=True)
+
+    def calculate_yield(self):
+        return self.amount * 1.75

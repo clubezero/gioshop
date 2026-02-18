@@ -1,0 +1,28 @@
+.icon-box {
+    width: 60px;
+    height: 60px;
+    background: rgba(13, 110, 253, 0.1);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #0d6efd;
+    margin-bottom: 20px;
+}
+
+.step-line {
+    position: relative;
+}
+
+@media (min-width: 992px) {
+    .step-line::after {
+        content: '';
+        position: absolute;
+        top: 30px;
+        left: 50px;
+        width: 80%;
+        border-top: 2px dashed #dee2e6;
+        z-index: -1;
+    }
+}

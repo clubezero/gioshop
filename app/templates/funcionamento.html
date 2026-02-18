@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>gioShop | Sistema de Motores</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/funcio.css') }}">
+</head>
+
+<body class="bg-light">
+
+    <header class="py-5 bg-white border-bottom shadow-sm text-center">
+        <div class="container">
+            <h1 class="display-5 fw-bold">Engenharia de <span class="text-primary">Ganhos</span></h1>
+            <p class="lead text-muted">Evolua seu motor, aumente sua potência e receba lucros exponenciais em 10 dias.
+            </p>
+        </div>
+    </header>
+
+    <main class="container py-5">
+
+        <div class="row justify-content-center mb-5 text-center">
+            <div class="col-md-8">
+                <div class="card border-0 shadow-sm p-4 rounded-4">
+                    <h4 class="fw-bold"><i class="bi bi-clock-history me-2 text-primary"></i> Ciclo de Aceleração</h4>
+                    <p class="mb-0">Todos os níveis operam em um ciclo quântico de <strong>10 dias</strong>. Ao final do
+                        período, você recebe seu capital de volta acrescido de <strong>75% de lucro líquido</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="card level-card shadow-sm h-100 p-4">
+                    <div class="card-body text-center">
+                        <i class="bi bi-cpu motor-icon mb-3 d-block"></i>
+                        <h5 class="fw-bold">Motor Zero</h5>
+                        <p class="text-muted small">Nível inicial para novos usuários explorarem a plataforma.</p>
+                        <hr>
+                        <h3 class="fw-bold">Grátis</h3>
+                        <p class="badge bg-secondary rounded-pill">Nível de Entrada</p>
+                        <button class="btn btn-outline-primary w-100 rounded-pill mt-3 disabled">Ativo por
+                            Padrão</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card level-card shadow-sm h-100 p-4 border-primary border-opacity-25">
+                    <span class="yield-badge">+75% Lucro</span>
+                    <div class="card-body text-center">
+                        <i class="bi bi-rocket-takeoff motor-icon mb-3 d-block"></i>
+                        <h5 class="fw-bold">Nível 1 (Impulso)</h5>
+                        <p class="text-muted small">Inicie sua jornada de lucros reais.</p>
+                        <hr>
+                        <h3 class="fw-bold">2.000 Kz</h3>
+                        <p class="text-success fw-bold small">Retorno: 3.500 Kz em 10 dias</p>
+                        <button class="btn btn-primary w-100 rounded-pill mt-3 shadow-sm">Upgrade Agora</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card level-card shadow-sm h-100 p-4">
+                    <span class="yield-badge">+75% Lucro</span>
+                    <div class="card-body text-center">
+                        <i class="bi bi-speedometer2 motor-icon mb-3 d-block"></i>
+                        <h5 class="fw-bold">Nível 2 (Turbo)</h5>
+                        <p class="text-muted small">Aumente a pressão do seu motor financeiro.</p>
+                        <hr>
+                        <h3 class="fw-bold">3.500 Kz</h3>
+                        <p class="text-success fw-bold small">Retorno: 6.125 Kz em 10 dias</p>
+                        <button class="btn btn-primary w-100 rounded-pill mt-3">Upgrade Agora</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card level-card shadow-sm h-100 p-4">
+                    <span class="yield-badge">+75% Lucro</span>
+                    <div class="card-body text-center">
+                        <i class="bi bi-plugin motor-icon mb-3 d-block"></i>
+                        <h5 class="fw-bold">Nível 3 (Fusão)</h5>
+                        <p class="text-muted small">Estabilidade e ganhos sólidos.</p>
+                        <hr>
+                        <h3 class="fw-bold">5.000 Kz</h3>
+                        <p class="text-success fw-bold small">Retorno: 8.750 Kz em 10 dias</p>
+                        <button class="btn btn-primary w-100 rounded-pill mt-3">Upgrade Agora</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card level-card shadow-sm h-100 p-4 border-warning">
+                    <span class="yield-badge">+75% Lucro</span>
+                    <div class="card-body text-center">
+                        <i class="bi bi-lightning-charge motor-icon mb-3 d-block text-warning"></i>
+                        <h5 class="fw-bold text-warning">Nível 4 (Nuclear)</h5>
+                        <p class="text-muted small">Alta performance para investidores focados.</p>
+                        <hr>
+                        <h3 class="fw-bold">6.500 Kz</h3>
+                        <p class="text-success fw-bold small">Retorno: 11.375 Kz em 10 dias</p>
+                        <button class="btn btn-warning w-100 rounded-pill mt-3 fw-bold">Upgrade Agora</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card level-card shadow-sm h-100 p-4 bg-dark text-white">
+                    <span class="yield-badge">+75% Lucro</span>
+                    <div class="card-body text-center">
+                        <i class="bi bi-star-fill motor-icon mb-3 d-block"></i>
+                        <h5 class="fw-bold text-primary">Nível 5 (Quântico)</h5>
+                        <p class="text-white-50 small">O ápice da tecnologia gioShop.</p>
+                        <hr class="border-secondary">
+                        <h3 class="fw-bold">7.000 Kz</h3>
+                        <p class="text-success fw-bold small">Retorno: 12.250 Kz em 10 dias</p>
+                        <button class="btn btn-gradient w-100 rounded-pill mt-3">Alcançar Ápice</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="py-4 bg-white border-top text-center mt-5">
+        <p class="text-muted small mb-0">gioShop Engenharia Quântica © 2026. Investimentos calculados sob algoritmo de
+            75% fixo.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
