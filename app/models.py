@@ -120,3 +120,5 @@ class pixModel(base.Model):
     nome = base.Column(base.String, nullable=True)
     conta = base.Column(base.String, nullable=True)
     id_user = base.Column(base.Integer, base.ForeignKey('users.id'), nullable=False)
+    def __repr__(self):
+        return f' {self.nome} - {self.conta}'

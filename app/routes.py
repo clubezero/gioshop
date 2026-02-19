@@ -1,6 +1,6 @@
 from app import aplication
-from app.models import userModel,admiModel,motorModel
-from app.forms import LoginForm, UserForm,AdminForm,MotorForm
+from app.models import userModel,admiModel,motorModel, pixModel
+from app.forms import LoginForm, UserForm,AdminForm,MotorForm, PixForm
 from flask import render_template,url_for, redirect
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -10,34 +10,12 @@ from flask_login import login_user, logout_user, current_user, login_required
 def homePage():
     return render_template('index.html')
 
+##############ROTAS DE USUÁRIO LOGADO HOME##############
+
 @aplication.route('/home/')
 @login_required
 def home():
     return render_template('homeuser.html')
-
-@aplication.route('/login/', methods=['POST', 'GET'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = form.login()
-        if user:
-            login_user(user, remember=True)
-            return render_template('homeuser.html')
-    return render_template('login.html', form = form)
-
-
-@aplication.route('/logout/', methods=['POST', 'GET'])
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('homePage'))
-
-@aplication.route('/admin/perfil/')
-@login_required
-def adminperfil():
-    return render_template('admin.html')
-
-
 
 @aplication.route('/home/sobre/')
 @login_required
@@ -64,12 +42,30 @@ def marke():
 def funcionamento():
     return render_template('funcionamento.html')
 
+############ROTAS DE LOGIN, LOGOUT##############
 
-@aplication.route('/admin/')
-def admin():
-    return render_template('loginAdmin.html')
+@aplication.route('/login/', methods=['POST', 'GET'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        context = {}
+        user = form.login()
+        if user:
+            login_user(user, remember=True)
+            return render_template('homeuser.html', context=context)
+    return render_template('login.html', form = form)
 
-####################FORMULARIOS DE CADASTROS####################
+
+@aplication.route('/logout/', methods=['POST', 'GET'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('homePage'))
+
+
+##########ROTAS DE PERFIL E FORMULARIOS DE CADASTROS##############
+
+
 @aplication.route('/usuario/cadastrar/', methods=['POST', 'GET'])
 def create():
     form = UserForm()
@@ -86,6 +82,74 @@ def createmoor():
         form.save()
 
     return render_template('motor.html', form = form)
+
+
+@aplication.route('/home/perfil/', methods=['POST', 'GET'])
+@login_required
+def perfil():
+    form = PixForm()
+    if form.validate_on_submit():
+        form.save(current_user.id)
+        return redirect(url_for('home'))
+    return render_template('perfil.html', form =form)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@aplication.route('/admin/')
+def admin():
+    return render_template('loginAdmin.html')
+
+@aplication.route('/admin/perfil/')
+@login_required
+def adminperfil():
+    return render_template('admin.html')
+
+
+
+
+
+##########ROTAS DE PERFIL E FORMULARIOS DE CADASTROS##############
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

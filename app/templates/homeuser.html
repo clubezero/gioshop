@@ -42,12 +42,13 @@
                                 class="profile-avatar shadow-sm" alt="Avatar">
                             <span class="level-badge-float">NÍVEL 3</span>
                         </div>
-                        <h4 class="fw-bold mb-0">Giovanni Engenheiro</h4>
-                        <p class="text-muted small mb-3">Membro desde Fev 2026</p>
+                        <h4 class="fw-bold mb-0">{{current_user.nome}} {{current_user.sobrenome}}</h4>
+                        <p class="text-muted small mb-3"><span class="text-primary">Membor
+                                desde:</span> {{current_user.data}}</p>
 
                         <div class="d-grid gap-2">
-                            <button class="btn btn-primary rounded-pill"><i class="bi bi-pencil-square me-2"></i>Editar
-                                Perfil</button>
+                            <a class="btn btn-primary rounded-pill" href="{{url_for('perfil')}}"><i
+                                    class="bi bi-pencil-square me-2"></i>Editar Perfil</a>
                         </div>
                     </div>
                 </div>
@@ -111,14 +112,14 @@
                     <h5 class="fw-bold mb-4">Configurações de Saque</h5>
                     <form>
                         <div class="mb-3">
-                            <label class="form-label small fw-bold">Chave PIX ou Conta Bancária (Angola)</label>
+                            <label class="form-label small fw-bold">PIX</label>
                             <input type="text" class="form-control rounded-pill bg-light border-0"
-                                value="0040.0000.XXXX.XXXX.XXXX" readonly>
+                                value="{{current_user.pix[0]}}" readonly>
                         </div>
                         <div class="mb-3">
                             <label class="form-label small fw-bold">E-mail para Notificações</label>
                             <input type="email" class="form-control rounded-pill bg-light border-0"
-                                value="giovanni@exemplo.com">
+                                value="{{current_user.email}}" readonly>
                         </div>
                         <button type="button" class="btn btn-dark rounded-pill px-4">Salvar Alterações</button>
                     </form>

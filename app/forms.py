@@ -78,9 +78,9 @@ class MotorForm(FlaskForm):
         base.session.commit()
 
 class PixForm(FlaskForm):
-    nome = StringField('Nome do Cliente', validators=[data_required()])
-    conta = IntegerField('Valor do Depósito', validators=[data_required()])
-    btn = SubmitField('Enviar Comprovativo')
+    nome = StringField('Nome do banco', validators=[data_required()])
+    conta = StringField('IBAN', validators=[data_required()])
+    btn = SubmitField('Salvar')
 
     def save(self, id_user):
         pix = pixModel(

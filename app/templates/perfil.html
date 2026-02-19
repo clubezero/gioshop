@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>gioShop | Adicionar pix</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/motor.css')}}">
+
+</head>
+
+<body>
+
+    <div class="container min-vh-100 d-flex align-items-center py-5">
+        <div class="row w-100 gy-5 align-items-center">
+
+            <div class="col-12 col-lg-7 text-center text-lg-start">
+                <h1 class="display-4 fw-bold text-dark mb-3">
+                    Comece agora a <span class="text-primary">liderar</span> o seu futuro.
+                </h1>
+                <p class="lead text-muted mb-4 mx-auto mx-lg-0" style="max-width: 500px;">
+                    Adcionar pix para os usuários poderem solicitar saques. O pix é uma forma rápida e segura de
+                    transferir dinheiro, permitindo que os usuários recebam seus ganhos de forma eficiente e
+                    conveniente.
+                </p>
+                <div class="d-none d-lg-block">
+                    <span class="badge bg-light text-primary p-2 px-3 border shadow-sm">✓ Sem estoque</span>
+                    <span class="badge bg-light text-primary p-2 px-3 border shadow-sm ms-2">✓ Escala Global</span>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-8 col-lg-5 mx-auto">
+                <div class="card shadow-lg p-3 border-0">
+                    <div class="card-body">
+                        <h4 class="fw-bold mb-4 text-center">Adicionar motor</h4>
+                        <form action="" method="post">
+                            {{ form.csrf_token() }}
+
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    {{ form.nome.label() }}
+                                    {{ form.nome(class="form-control", placeholder="BFA") }}
+                                </div>
+                                <div class="col-12">
+                                    {{ form.conta.label() }}
+                                    {{ form.conta(class="form-control", placeholder="IBAN") }}
+                                </div>
+                            </div>
+                            <div class="d-grid">
+                                {{ form.btn(class="btn btn-primary btn-lg btn-gradient shadow rounded-pill fw-bold
+                                py-3") }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
