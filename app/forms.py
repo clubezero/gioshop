@@ -1,6 +1,6 @@
 import os
 from app import base, bcrypt
-from app.models import userModel, admiModel, motorModel
+from app.models import pixModel, userModel, admiModel, motorModel
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, FileField, SubmitField,IntegerField
 from wtforms.validators import data_required,Email
@@ -75,4 +75,19 @@ class MotorForm(FlaskForm):
         )
 
         base.session.add(motor)
+        base.session.commit()
+
+class PixForm(FlaskForm):
+    nome = StringField('Nome do Cliente', validators=[data_required()])
+    conta = IntegerField('Valor do Depósito', validators=[data_required()])
+    btn = SubmitField('Enviar Comprovativo')
+
+    def save(self, id_user):
+        pix = pixModel(
+            nome = self.nome.data,
+            conta = self.conta.data,
+            id_user = id_user
+        )
+
+        base.session.add(pix)
         base.session.commit()

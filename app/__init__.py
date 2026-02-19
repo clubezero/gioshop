@@ -32,3 +32,4 @@ from app.models import investmentModel
 from app.models import productModel
 from app.models import saleModel
 from app.models import admiModel
+from app.models import pixModel

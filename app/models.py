@@ -22,6 +22,7 @@ class userModel(base.Model, UserMixin):
     saques = base.relationship('withdrawModel', backref='beneficiario', lazy=True)
     vendas = base.relationship('saleModel', backref='comprador', lazy=True)
     historico_motores = base.relationship('motorUpgradeModel', backref='investidor', lazy=True)
+    pix = base.relationship('pixModel', backref='cliente', lazy=True)
 
 # 2. Tabela de Configuração de Motores
 class motorModel(base.Model):
@@ -111,3 +112,11 @@ class admiModel(base.Model, UserMixin):
     email = base.Column(base.String, unique=True, nullable=True)
     senha = base.Column(base.String, nullable=True)
     telefone = base.Column(base.String, nullable=True)
+
+# Tabela de Pix
+class pixModel(base.Model):
+    __tablename__ = 'pix'
+    id = base.Column(base.Integer, primary_key=True)
+    nome = base.Column(base.String, nullable=True)
+    conta = base.Column(base.String, nullable=True)
+    id_user = base.Column(base.Integer, base.ForeignKey('users.id'), nullable=False)
