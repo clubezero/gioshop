@@ -1,6 +1,6 @@
 from app import aplication
 from app.models import userModel,admiModel,motorModel, pixModel
-from app.forms import LoginForm, UserForm,AdminForm,MotorForm, PixForm
+from app.forms import LoginForm, UserForm,AdminForm,MotorForm, PixForm, SaqueForm
 from flask import render_template,url_for, redirect
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -18,7 +18,6 @@ def home():
     return render_template('homeuser.html')
 
 @aplication.route('/home/sobre/')
-@login_required
 def inforLogin():
     return render_template('info.html')
 
@@ -37,10 +36,21 @@ def infor():
 def marke():
     return render_template('marketplace.html')
 
-@aplication.route('/home/funcionamento/')
+
+@aplication.route('/home/funcionamento/', methods=['POST', 'GET'])
 @login_required
 def funcionamento():
-    return render_template('funcionamento.html')
+    obj = motorModel.query.all()
+    return render_template('funcionamento.html', obj=obj)
+
+
+@aplication.route('/home/funcionamento/<int:id>', methods=['GET'])
+@login_required
+def funcionamentoId(id):
+    obj = motorModel.query.get(id)
+    return render_template('informacaomotor.html', obj=obj)
+
+
 
 ############ROTAS DE LOGIN, LOGOUT##############
 
@@ -79,8 +89,7 @@ def create():
 def createmoor():
     form = MotorForm()
     if form.validate_on_submit():
-        form.save()
-
+        form.save(current_user.id)
     return render_template('motor.html', form = form)
 
 
@@ -92,6 +101,16 @@ def perfil():
         form.save(current_user.id)
         return redirect(url_for('home'))
     return render_template('perfil.html', form =form)
+
+@aplication.route('/home/saque/', methods=['POST', 'GET'])
+@login_required
+def solicitar_saque():
+    form = SaqueForm()
+    if form.validate_on_submit():
+        form.save(current_user.id)
+        return redirect(url_for('home'))
+    return render_template('solicitar_saque.html', form = form)
+
 
 
 

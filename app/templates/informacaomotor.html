@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>gioShop | Upgrades de Performance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container py-2">
+            <a class="navbar-brand fw-bold text-primary" href="{{url_for('home')}}">gioShop</a>
+            <div class="d-flex gap-2 ms-auto">
+                <a href="{{url_for('funcionamento')}}" class="btn btn-outline-primary rounded-pill px-4">Voltar ao
+                    Painel</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="py-5 bg-light">
+        <div class="container text-center">
+            <h1 class="display-5 fw-bold mb-3">Motores de <span class="text-primary">Alta Performance</span></h1>
+            <p class="lead text-muted">Aumente a velocidade de processamento e escale suas vendas com nossos upgrades de
+                infraestrutura.</p>
+            <p class="lead text-muted">
+                Invista uma vez e e ganhe 75% de lucro líquido a cada ciclo de 10 dias. Escolha o motor que melhor se
+                encaixa no seu perfil e veja seus resultados decolarem.
+
+            </p>
+        </div>
+    </header>
+
+    <section class="container my-5 py-4">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Detalhamento dos <span class="text-primary">Motores de Lucro</span></h2>
+            <p class="text-muted">Entenda como cada tecnologia impulsiona seus resultados na gioShop.</p>
+        </div>
+
+        <div class="accordion shadow-sm rounded-4 overflow-hidden" id="accordionMotores">
+
+            <div class="accordion-item border-0">
+                <h2 class="accordion-header">
+                    <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne">
+                        <i class="bi bi-play-circle-fill text-secondary me-2"></i> 1. Motor Padrão: Jornada Sem
+                        Investimento
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionMotores">
+                    <div class="accordion-body text-muted">
+                        O <strong>Motor Padrão</strong> é a porta de entrada para quem quer transformar seu tempo livre
+                        em lucro real. Aqui, a moeda de troca é o seu engajamento: utilize o poder das suas redes
+                        sociais com links de convite exclusivos e monetize sua atenção assistindo a conteúdos
+                        selecionados no YouTube e TikTok. É a infraestrutura ideal para validar seu potencial na gioShop
+                        sem gastar um centavo, gerando seus primeiros rendimentos de forma orgânica e constante.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item border-0 border-top">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo">
+                        <i class="bi bi-rocket-takeoff-fill text-primary me-2"></i> 2. Motor Impulso: Aceleração de
+                        Resultados (75% em 10 dias)
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionMotores">
+                    <div class="accordion-body text-muted">
+                        Pronto para sair da inércia? O <strong>Motor Impulso</strong> foi desenhado para quem entende
+                        que tempo é dinheiro. Com um investimento inicial acessível, você ativa um ciclo de aceleração
+                        que retorna <strong>75% de lucro sobre o valor investido em apenas 10 dias</strong>. É a
+                        velocidade que você precisa para ver seu saldo crescer enquanto a nossa plataforma otimiza seus
+                        processos de conversão automaticamente.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item border-0 border-top">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree">
+                        <i class="bi bi-patch-check-fill text-success me-2"></i> 3. Motor Fusão: Estabilidade e Alto
+                        Rendimento
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionMotores">
+                    <div class="accordion-body text-muted">
+                        O <strong>Motor Fusão</strong> combina a base sólida da gioShop com algoritmos de alto
+                        desempenho. Ao fundir seu capital com nossa tecnologia de ponta, você desbloqueia margens de
+                        lucro superiores e ciclos de retorno ainda mais curtos. É o motor preferido dos usuários que já
+                        escalaram seus primeiros ganhos e buscam uma fonte de renda robusta, sustentada por uma
+                        infraestrutura que não conhece limites de processamento.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item border-0 border-top">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFour">
+                        <i class="bi bi-radioactive text-warning me-2"></i> 4. Motor Nuclear: Poder de Escala
+                        Exponencial
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionMotores">
+                    <div class="accordion-body text-muted">
+                        Quando o assunto é escala agressiva, o <strong>Motor Nuclear</strong> é a escolha definitiva.
+                        Projetado para suportar altíssimos volumes de transações simultâneas, este motor gera uma reação
+                        em cadeia nos seus rendimentos. O retorno aqui não é apenas linear, é explosivo. É a engenharia
+                        pesada da gioShop trabalhando 24 horas por dia para garantir que sua estrutura digital nunca
+                        pare de faturar.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item border-0 border-top">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFive">
+                        <i class="bi bi-cpu-fill text-info me-2"></i> 5. Motor Quântico: A Fronteira da Engenharia
+                        Digital
+                    </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionMotores">
+                    <div class="accordion-body text-muted">
+                        Chegamos ao ápice da tecnologia gioShop. Inspirado nos princípios da <strong>Engenharia
+                            Quântica</strong>, este motor opera em múltiplas camadas de oportunidade simultaneamente.
+                        Não se trata apenas de investir, mas de dominar o mercado com latência zero e segurança
+                        criptográfica pós-quântica. O Motor Quântico oferece os maiores multiplicadores da plataforma,
+                        processando lucros em uma velocidade que desafia a lógica financeira tradicional.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <footer class="bg-dark text-center text-light p-5 mt-5">
+        <div class="container">
+            <small class="text-secondary opacity-75">© 2026 gioShop - Upgrade de Motores de Engenharia Digital.</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

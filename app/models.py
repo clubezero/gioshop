@@ -12,7 +12,7 @@ class userModel(base.Model, UserMixin):
     senha = base.Column(base.String, nullable=True)
     telefone = base.Column(base.String, nullable=True)
     data = base.Column(base.DateTime, default=datetime.utcnow)
-    balance = base.Column(base.Float, default=0.0)
+    balance = base.Column(base.Float, default=1000.0)  # Saldo inicial para novos usuários
     
     motor_id = base.Column(base.Integer, base.ForeignKey('motors.id'), default=0)
     
@@ -36,19 +36,13 @@ class motorModel(base.Model):
 class motorUpgradeModel(base.Model):
     __tablename__ = 'motor_upgrades'
     id = base.Column(base.Integer, primary_key=True)
-    
-    # FK para o Utilizador
     user_id = base.Column(base.Integer, base.ForeignKey('users.id'), nullable=False)
-    
-    # FK para o Motor que foi comprado
     motor_id = base.Column(base.Integer, base.ForeignKey('motors.id'), nullable=False)
-    
     valor_pago = base.Column(base.Float, nullable=False)
     data_upgrade = base.Column(base.DateTime, default=datetime.utcnow)
-
+    motor = base.relationship('motorModel', backref='vendas_deste_nivel', lazy=True)
     # RELAÇÕES: Permite fazer upgrade.motor.name ou upgrade.investidor.nome
     # (O backref 'historico_motores' permite que o User aceda a esta tabela)
-    motor = base.relationship('motorModel', backref='vendas_deste_nivel', lazy=True)
 
 # 3. Tabela de Depósitos
 class depositModel(base.Model):
@@ -64,12 +58,14 @@ class depositModel(base.Model):
 class withdrawModel(base.Model):
     __tablename__ = 'withdraws'
     id = base.Column(base.Integer, primary_key=True)
-    user_id = base.Column(base.Integer, base.ForeignKey('users.id'), nullable=False)
-    amount = base.Column(base.Float, nullable=False)
-    bank_details = base.Column(base.Text, nullable=False)
+    user_id = base.Column(base.Integer, base.ForeignKey('users.id'), nullable=True)
+    amount = base.Column(base.Float, nullable=True)
+    bank_details = base.Column(base.Text, nullable=True)
     status = base.Column(base.String, default='Pendente')
     created_at = base.Column(base.DateTime, default=datetime.utcnow)
-    processed_at = base.Column(base.DateTime, nullable=True)
+
+    def __repr__(self):
+        return f'{self.amount}'
 
 # 5. Tabela de Investimentos
 class investmentModel(base.Model):

@@ -39,7 +39,7 @@
                 <div class="card level-card shadow-sm h-100 p-4">
                     <div class="card-body text-center">
                         <i class="bi bi-cpu motor-icon mb-3 d-block"></i>
-                        <h5 class="fw-bold">Motor Zero</h5>
+                        <h5 class="fw-bold">Nível Padrão</h5>
                         <p class="text-muted small">Nível inicial para novos usuários explorarem a plataforma.</p>
                         <hr>
                         <h3 class="fw-bold">Grátis</h3>
@@ -55,12 +55,13 @@
                     <span class="yield-badge">+75% Lucro</span>
                     <div class="card-body text-center">
                         <i class="bi bi-rocket-takeoff motor-icon mb-3 d-block"></i>
-                        <h5 class="fw-bold">Nível 1 (Impulso)</h5>
+                        <h5 class="fw-bold">Nível {{obj[1].name}} </h5>
                         <p class="text-muted small">Inicie sua jornada de lucros reais.</p>
                         <hr>
-                        <h3 class="fw-bold">2.000 Kz</h3>
+                        <h3 class="fw-bold">{{obj[1].upgrade_cost}} Kz</h3>
                         <p class="text-success fw-bold small">Retorno: 3.500 Kz em 10 dias</p>
-                        <button class="btn btn-primary w-100 rounded-pill mt-3 shadow-sm">Upgrade Agora</button>
+                        <a href="{{ url_for('funcionamentoId', id=obj[1].id) }}"
+                            class="btn btn-primary w-100 rounded-pill mt-3 shadow-sm">Upgrade Agora</a>
                     </div>
                 </div>
             </div>
@@ -70,12 +71,13 @@
                     <span class="yield-badge">+75% Lucro</span>
                     <div class="card-body text-center">
                         <i class="bi bi-speedometer2 motor-icon mb-3 d-block"></i>
-                        <h5 class="fw-bold">Nível 2 (Turbo)</h5>
+                        <h5 class="fw-bold">Nível {{obj[2].name}} </h5>
                         <p class="text-muted small">Aumente a pressão do seu motor financeiro.</p>
                         <hr>
-                        <h3 class="fw-bold">3.500 Kz</h3>
+                        <h3 class="fw-bold">{{obj[2].upgrade_cost}} Kz</h3>
                         <p class="text-success fw-bold small">Retorno: 6.125 Kz em 10 dias</p>
-                        <button class="btn btn-primary w-100 rounded-pill mt-3">Upgrade Agora</button>
+                        <a href="{{ url_for('funcionamentoId', id=obj[2].id) }}"
+                            class="btn btn-primary w-100 rounded-pill mt-3">Upgrade Agora</a>
                     </div>
                 </div>
             </div>
@@ -85,12 +87,13 @@
                     <span class="yield-badge">+75% Lucro</span>
                     <div class="card-body text-center">
                         <i class="bi bi-plugin motor-icon mb-3 d-block"></i>
-                        <h5 class="fw-bold">Nível 3 (Fusão)</h5>
+                        <h5 class="fw-bold">Nível {{obj[3].name}} </h5>
                         <p class="text-muted small">Estabilidade e ganhos sólidos.</p>
                         <hr>
-                        <h3 class="fw-bold">5.000 Kz</h3>
+                        <h3 class="fw-bold">{{obj[3].upgrade_cost}} Kz</h3>
                         <p class="text-success fw-bold small">Retorno: 8.750 Kz em 10 dias</p>
-                        <button class="btn btn-primary w-100 rounded-pill mt-3">Upgrade Agora</button>
+                        <a href="{{ url_for('funcionamentoId', id=obj[3].id) }}"
+                            class="btn btn-primary w-100 rounded-pill mt-3">Upgrade Agora</a>
                     </div>
                 </div>
             </div>
@@ -100,12 +103,13 @@
                     <span class="yield-badge">+75% Lucro</span>
                     <div class="card-body text-center">
                         <i class="bi bi-lightning-charge motor-icon mb-3 d-block text-warning"></i>
-                        <h5 class="fw-bold text-warning">Nível 4 (Nuclear)</h5>
+                        <h5 class="fw-bold text-warning">Nível {{obj[4].name}}</h5>
                         <p class="text-muted small">Alta performance para investidores focados.</p>
                         <hr>
-                        <h3 class="fw-bold">6.500 Kz</h3>
+                        <h3 class="fw-bold">{{obj[4].upgrade_cost}} Kz</h3>
                         <p class="text-success fw-bold small">Retorno: 11.375 Kz em 10 dias</p>
-                        <button class="btn btn-warning w-100 rounded-pill mt-3 fw-bold">Upgrade Agora</button>
+                        <a href="{{ url_for('funcionamentoId', id=obj[4].id) }}"
+                            class="btn btn-warning w-100 rounded-pill mt-3 fw-bold">Upgrade Agora</a>
                     </div>
                 </div>
             </div>
@@ -115,12 +119,13 @@
                     <span class="yield-badge">+75% Lucro</span>
                     <div class="card-body text-center">
                         <i class="bi bi-star-fill motor-icon mb-3 d-block"></i>
-                        <h5 class="fw-bold text-primary">Nível 5 (Quântico)</h5>
+                        <h5 class="fw-bold text-primary">Nível {{obj[5].name}}</h5>
                         <p class="text-white-50 small">O ápice da tecnologia gioShop.</p>
                         <hr class="border-secondary">
-                        <h3 class="fw-bold">7.000 Kz</h3>
+                        <h3 class="fw-bold">{{obj[5].upgrade_cost}} Kz</h3>
                         <p class="text-success fw-bold small">Retorno: 12.250 Kz em 10 dias</p>
-                        <button class="btn btn-gradient w-100 rounded-pill mt-3">Alcançar Ápice</button>
+                        <a href="{{ url_for('funcionamentoId', id=obj[5].id) }}"
+                            class="btn btn-gradient w-100 rounded-pill mt-3">Alcançar Ápice</a>
                     </div>
                 </div>
             </div>

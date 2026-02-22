@@ -1,6 +1,6 @@
 import os
 from app import base, bcrypt
-from app.models import pixModel, userModel, admiModel, motorModel
+from app.models import motorUpgradeModel, pixModel, userModel, admiModel, motorModel,withdrawModel
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, FileField, SubmitField,IntegerField
 from wtforms.validators import data_required,Email
@@ -68,10 +68,11 @@ class MotorForm(FlaskForm):
     upgrade_cost = IntegerField('Custo de Upgrade', validators=[data_required()])
     btn = SubmitField('Adicionar Motor')
 
-    def save(self):
+    def save(self, id):
         motor = motorModel(
             name = self.nome.data,
             upgrade_cost = self.upgrade_cost.data,
+            id_user = id
         )
 
         base.session.add(motor)
@@ -91,3 +92,33 @@ class PixForm(FlaskForm):
 
         base.session.add(pix)
         base.session.commit()
+
+
+class SaqueForm(FlaskForm):
+    montante = StringField('Valor do Saque', validators=[data_required()])
+    detalhes = StringField('Detalhes do Banco', validators=[data_required()])
+    btn = SubmitField('Solicitar Saque')
+
+    def save(self, id_user):
+        saque = withdrawModel(
+            user_id = id_user,
+            amount = self.montante.data,
+            bank_details = self.detalhes.data
+        )
+
+        base.session.add(saque)
+        base.session.commit()
+
+
+class UpgradeMotorForm(FlaskForm):
+    valor_pago = IntegerField('Valor Pago', validators=[data_required()])
+    def save(self, id_user, motor_id):
+        upgrade = motorUpgradeModel(
+            user_id = id_user,
+            motor_id = motor_id,
+            valor_pago = self.valor_pago.data
+        )
+        base.session.add(upgrade)
+        base.session.commit()
+
+
