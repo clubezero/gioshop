@@ -1,0 +1,102 @@
+/* Configurações Gerais */
+:root {
+    --primary-color: #0d6efd;
+    --quantum-color: #0dcaf0;
+    --nuclear-color: #ffc107;
+    --dark-bg: #212529;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Cards de Motores */
+.card-feature {
+    transition: transform 0.3s ease, shadow 0.3s ease;
+    border-radius: 20px !important;
+}
+
+.card-feature:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(13, 110, 253, 0.15) !important;
+}
+
+/* Ícones dos Motores */
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+    background: linear-gradient(45deg, var(--primary-color), var(--quantum-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Progresso e Tasks */
+.progress {
+    background-color: #e9ecef;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    transition: width 1s ease-in-out;
+}
+
+/* Customização do Accordion */
+.accordion-button:not(.collapsed) {
+    background-color: rgba(13, 110, 253, 0.05);
+    color: var(--primary-color);
+    box-shadow: none;
+}
+
+.accordion-item {
+    margin-bottom: 10px;
+    border-radius: 15px !important;
+}
+
+/* Efeito Quântico (Sutil brilho nos cards VIP) */
+.card-quantum {
+    border: 1px solid rgba(13, 202, 240, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.card-quantum::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(13, 202, 240, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* Tabela de Usuários */
+.table thead th {
+    border: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.avatar-circle {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Botões Arredondados */
+.btn-pill {
+    border-radius: 50px;
+    padding: 10px 25px;
+    font-weight: 500;
+}

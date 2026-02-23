@@ -62,6 +62,17 @@ class LoginForm(FlaskForm):
         if user:
             if bcrypt.check_password_hash(user.senha, self.senha.data.encode('utf-8')):
                 return user
+            
+class LoginAdminForm(FlaskForm):
+    email = StringField('E-Mail', validators=[data_required(), Email()])
+    senha = PasswordField('Palavra-Passe', validators=[data_required()])
+    btn = SubmitField('Entrar como Admin')
+
+    def login(self):
+        admin = admiModel.query.filter_by(email = self.email.data).first()
+        if admin:
+            if bcrypt.check_password_hash(admin.senha, self.senha.data.encode('utf-8')):
+                return admin
 
 class MotorForm(FlaskForm):
     nome = StringField('Nome do Motor', validators=[data_required()])

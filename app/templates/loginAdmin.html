@@ -26,22 +26,26 @@
                         </div>
                         <div class="col-md-7 p-5 bg-white">
                             <h3 class="fw-bold mb-4 text-dark">Acessar a conta</h3>
-                            <form action="/login" method="POST">
+                            <form method="POST">
+                                {{ form.csrf_token }}
+
 
                                 <div class="mb-3">
-                                    <label class="form-label small fw-bold">E-mail</label>
-                                    <input type="email" name="email"
-                                        class="form-control rounded-pill border-light bg-light px-4"
-                                        placeholder="seu@email.com" required>
+                                    {{ form.email.label(class="form-label small fw-bold") }}
+                                    {{ form.email(class="form-control rounded-pill border-light bg-light px-4",
+                                    placeholder="seu@email.com")}}
+
                                 </div>
                                 <div class="mb-4">
-                                    <label class="form-label small fw-bold">Senha</label>
-                                    <input type="password" name="password"
-                                        class="form-control rounded-pill border-light bg-light px-4"
-                                        placeholder="••••••••" required>
+
+                                    {{ form.senha.label(class="form-label small fw-bold") }}
+                                    {{ form.senha(class="form-control rounded-pill border-light bg-light px-4",
+                                    placeholder="••••••••")}}
+
                                 </div>
-                                <button type="submit"
-                                    class="btn btn-primary w-100 rounded-pill py-2 fw-bold shadow-sm">Entar</button>
+
+                                {{form.btn(class="btn btn-primary w-100 rounded-pill py-2 fw-bold shadow-sm")}}
+
                             </form>
                         </div>
                     </div>

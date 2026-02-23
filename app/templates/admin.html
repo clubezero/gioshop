@@ -16,13 +16,15 @@
         <div class="row">
             <nav class="col-md-3 col-lg-2 d-md-block admin-sidebar collapse p-4 bg-dark">
                 <h3 class="fw-bold text-primary mb-5">ADMIN</h3>
+                <p class="fw-bold text-primary mb-5">{{ current_user.nome}} {{ current_user.sobrenome}}</p>
                 <ul class="nav flex-column gap-3">
                     <li class="nav-item">
                         <a class="nav-link text-white active" href="#"><i class="bi bi-speedometer2 me-2"></i>
                             Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white-50" href="#"><i class="bi bi-people me-2"></i> Utilizadores</a>
+                        <a class="nav-link text-white-50" href="{{ url_for('users') }}"><i
+                                class="bi bi-people me-2"></i> Utilizadores</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white-50" href="#"><i class="bi bi-cash-coin me-2"></i> Saques

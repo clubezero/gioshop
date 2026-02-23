@@ -1,6 +1,6 @@
 from app import aplication
 from app.models import userModel,admiModel,motorModel, pixModel
-from app.forms import LoginForm, UserForm,AdminForm,MotorForm, PixForm, SaqueForm
+from app.forms import LoginAdminForm, LoginForm, UserForm,AdminForm,MotorForm, PixForm, SaqueForm
 from flask import render_template,url_for, redirect
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -113,26 +113,44 @@ def solicitar_saque():
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-@aplication.route('/admin/')
-def admin():
-    return render_template('loginAdmin.html')
-
 @aplication.route('/admin/perfil/')
 @login_required
 def adminperfil():
     return render_template('admin.html')
+
+
+
+
+@aplication.route('/admin/cadastrar/', methods=['POST', 'GET'])
+def createadm():
+    form = AdminForm()
+    if form.validate_on_submit():
+        user = form.save()
+        login_user(user, remember=True)
+        return redirect(url_for('adminperfil'))
+    return render_template('admiconta.html', form = form)
+
+
+@aplication.route('/admin/', methods=['POST', 'GET'])
+def loginadmin():
+    form = LoginAdminForm()
+    if form.validate_on_submit():
+        adm = form.login()
+        if adm:
+            login_user(adm, remember=True)
+            return redirect(url_for('adminperfil'))
+    return render_template('loginAdmin.html', form = form)
+
+
+
+@aplication.route('/admin/users/', methods=['POST', 'GET'])
+@login_required
+def users():
+    obj = userModel.query.all()
+    return render_template('users.html', obj=obj)
+
+
+
 
 
 
@@ -172,14 +190,7 @@ def adminperfil():
 
 
 
-@aplication.route('/admin/cadastrar/', methods=['POST', 'GET'])
-def createadm():
-    form = AdminForm()
-    if form.validate_on_submit():
-        user = form.save()
-        login_user(user, remember=True)
-        return redirect(url_for('adminperfil'))
-    return render_template('admiconta.html', form = form)
+
 
 
 @aplication.route('/meus-upgrades')
