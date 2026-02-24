@@ -8,15 +8,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
 </head>
 
 <body>
 
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container py-2">
-            <div class="collapse navbar-collapse" id="navContent">
+            <a class="navbar-brand fw-bold text-primary" href="#">gioShop</a>
 
+            <div class="ms-auto">
                 <div class="d-flex gap-2">
                     <a href="{{url_for('login')}}" class="btn btn-outline-primary rounded-pill px-4">Comece a
                         faturar</a>
@@ -25,8 +25,8 @@
         </div>
     </nav>
 
-    <header class="hero-section">
-        <div class="container">
+    <header class="hero-section py-lg-5">
+        <div class="container py-5">
             <div class="row align-items-center">
                 <div class="col-12 col-lg-6 text-center text-lg-start mb-5 mb-lg-0">
                     <h1 class="display-3 fw-bold mb-3">
@@ -36,13 +36,15 @@
                         Fazer dinheiro nunca foi tão fácil. A <strong>gioShop</strong> oferece a estrutura perfeita para
                         você escalar seus sonhos no mundo digital.
                     </p>
-                    <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
+                    <div class="d-grid d-sm-flex gap-3 justify-content-center justify-content-lg-start">
                         <a href="{{url_for('inforLogin')}}"
                             class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow">Saiba mais</a>
                     </div>
                 </div>
+
                 <div class="col-12 col-lg-6 text-center">
-                    <div id="homeCarousel" class="carousel slide shadow-lg rounded-5 overflow-hidden"
+                    <div id="homeCarousel"
+                        class="carousel slide shadow-lg rounded-5 overflow-hidden border border-secondary"
                         data-bs-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
@@ -72,39 +74,42 @@
         <div class="row g-4">
             <div class="col-12 col-md-4">
                 <div class="card card-feature h-100 shadow-sm p-4 border-0">
-                    <div class="card-body text-center">
+                    <div class="card-body text-center text-white">
                         <i class="bi bi-lightning-charge-fill feature-icon"></i>
                         <h5 class="fw-bold mb-3">Vendas Rápidas</h5>
-                        <p class="text-muted">Nossa plataforma é otimizada para conversão instantânea de clientes.</p>
+                        <p class="text-muted small">Nossa plataforma é otimizada para conversão instantânea de clientes.
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-md-4">
                 <div class="card card-feature h-100 shadow-sm p-4 border-0">
-                    <div class="card-body text-center">
+                    <div class="card-body text-center text-white">
                         <i class="bi bi-shield-check feature-icon"></i>
                         <h5 class="fw-bold mb-3">Segurança Total</h5>
-                        <p class="text-muted">Proteção de dados e pagamentos garantida por criptografia de ponta.</p>
+                        <p class="text-muted small">Proteção de dados e pagamentos garantida por criptografia de ponta.
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-md-4">
                 <div class="card card-feature h-100 shadow-sm p-4 border-0">
-                    <div class="card-body text-center">
+                    <div class="card-body text-center text-white">
                         <i class="bi bi-graph-up-arrow feature-icon"></i>
                         <h5 class="fw-bold mb-3">Escalabilidade</h5>
-                        <p class="text-muted">Seu negócio cresce sem limites, cuidamos de toda a infraestrutura.</p>
+                        <p class="text-muted small">Seu negócio cresce sem limites, cuidamos de toda a infraestrutura.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-dark text-center text-light p-5 mt-5">
+    <footer class="bg-dark text-center text-light p-5 mt-5 border-top border-secondary">
         <div class="container">
             <div class="mb-4">
                 <h3 class="fw-bold text-primary">gioShop</h3>
-                <p class="text-secondary">Transformando o futuro digital.</p>
+                <p class="text-secondary small">Transformando o futuro digital.</p>
             </div>
             <div class="mb-3">
                 <a href="#" class="text-light mx-2 fs-4"><i class="bi bi-instagram"></i></a>

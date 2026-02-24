@@ -1,4 +1,10 @@
 /* Configurações Gerais */
+body {
+    background-color: #0f111a;
+    /* Tom escuro profundo */
+    color: #ffffff;
+}
+
 :root {
     --primary-color: #0d6efd;
     --quantum-color: #0dcaf0;
@@ -36,7 +42,6 @@ body {
     margin-bottom: 1rem;
     display: inline-block;
     background: linear-gradient(45deg, var(--primary-color), var(--quantum-color));
-    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 

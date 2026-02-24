@@ -5,9 +5,13 @@
 }
 
 body {
-    background-color: var(--bg-soft);
+
+
+    background-color: #0f111a;
+    /* Tom escuro profundo */
+    color: #ffffff;
+
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    color: #1e293b;
 }
 
 .login-card {

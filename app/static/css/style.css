@@ -1,48 +1,43 @@
-:root {
-    --primary-color: #0d6efd;
-}
-
+/* Estilos para o Background Escuro */
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f8f9fa;
+    background-color: #0f111a;
+    /* Tom escuro profundo */
+    color: #ffffff;
 }
 
 .navbar {
-    background: #fff !important;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    background-color: rgba(15, 17, 26, 0.95);
+    border-bottom: 1px solid #2d2f3b;
 }
 
-.hero-section {
-    padding: 100px 0;
-    background: linear-gradient(135deg, #fff 0%, #f0f4ff 100%);
-}
-
-.btn-gradient {
-    background: linear-gradient(45deg, #0d6efd, #0046af);
-    border: none;
-    color: white;
+.text-muted {
+    color: #a0a0a0 !important;
 }
 
 .card-feature {
-    border-radius: 20px;
-    transition: all 0.3s ease;
-    background: #fff;
+    background-color: #1a1d29;
+    /* Card ligeiramente mais claro que o fundo */
+    border: 1px solid #2d2f3b !important;
+    transition: transform 0.3s;
 }
 
 .card-feature:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+    transform: translateY(-5px);
+    border-color: #0d6efd !important;
 }
 
 .feature-icon {
     font-size: 2.5rem;
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    display: inline-block;
+    color: #0d6efd;
 }
 
-.carousel-item img {
-    border-radius: 25px;
-    object-fit: cover;
-    height: 400px;
+/* Ajuste para o carrossel em telas menores */
+@media (max-width: 991px) {
+    .hero-section {
+        padding-top: 40px;
+    }
+
+    .display-3 {
+        font-size: 2.5rem;
+    }
 }

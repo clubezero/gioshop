@@ -1,7 +1,7 @@
-.admin-sidebar {
-    min-height: 100vh;
-    background: #1e293b;
-    color: white;
+body {
+    background-color: #0f111a;
+    /* Tom escuro profundo */
+    color: #ffffff;
 }
 
 .admin-card {
