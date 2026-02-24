@@ -1,34 +1,64 @@
+/* TEMA DARK & ENGENHARIA DIGITAL */
 body {
-    background-color: #0f111a;
-    /* Tom escuro profundo */
-    color: #ffffff;
+    background-color: #0b0e11;
+    color: #e9ecef;
+    font-family: 'Inter', sans-serif;
 }
 
-.icon-box {
-    width: 60px;
-    height: 60px;
-    background: rgba(13, 110, 253, 0.1);
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    color: #0d6efd;
-    margin-bottom: 20px;
+.navbar {
+    background-color: rgba(11, 14, 17, 0.98);
+    border-bottom: 1px solid #2d3436;
 }
 
-.step-line {
-    position: relative;
+.header-section {
+    background-color: #0d1117;
+    border-bottom: 1px solid #30363d;
+    padding: 80px 0;
 }
 
-@media (min-width: 992px) {
-    .step-line::after {
-        content: '';
-        position: absolute;
-        top: 30px;
-        left: 50px;
-        width: 80%;
-        border-top: 2px dashed #dee2e6;
-        z-index: -1;
+/* Accordion Customizado Dark */
+.accordion-item {
+    background-color: #161b22 !important;
+    border: 1px solid #30363d !important;
+    margin-bottom: 10px;
+    border-radius: 12px !important;
+    overflow: hidden;
+}
+
+.accordion-button {
+    background-color: #161b22 !important;
+    color: #e9ecef !important;
+    box-shadow: none !important;
+    padding: 1.25rem;
+}
+
+.accordion-button:not(.collapsed) {
+    color: #0d6efd !important;
+    border-bottom: 1px solid #30363d;
+}
+
+.accordion-button::after {
+    filter: invert(1);
+    /* Torna a seta branca */
+}
+
+.accordion-body {
+    background-color: #0d1117;
+    color: #8b949e;
+    line-height: 1.6;
+}
+
+.text-muted {
+    color: #8b949e !important;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .display-5 {
+        font-size: 2.2rem;
+    }
+
+    .header-section {
+        padding: 40px 0;
     }
 }

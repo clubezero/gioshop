@@ -122,12 +122,10 @@ class SaqueForm(FlaskForm):
 
 
 class UpgradeMotorForm(FlaskForm):
-    valor_pago = IntegerField('Valor Pago', validators=[data_required()])
     def save(self, id_user, motor_id):
         upgrade = motorUpgradeModel(
             user_id = id_user,
             motor_id = motor_id,
-            valor_pago = self.valor_pago.data
         )
         base.session.add(upgrade)
         base.session.commit()

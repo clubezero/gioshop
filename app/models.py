@@ -38,7 +38,6 @@ class motorUpgradeModel(base.Model):
     id = base.Column(base.Integer, primary_key=True)
     user_id = base.Column(base.Integer, base.ForeignKey('users.id'), nullable=False)
     motor_id = base.Column(base.Integer, base.ForeignKey('motors.id'), nullable=False)
-    valor_pago = base.Column(base.Float, nullable=False)
     data_upgrade = base.Column(base.DateTime, default=datetime.utcnow)
     motor = base.relationship('motorModel', backref='vendas_deste_nivel', lazy=True)
     # RELAÇÕES: Permite fazer upgrade.motor.name ou upgrade.investidor.nome

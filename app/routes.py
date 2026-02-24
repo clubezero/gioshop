@@ -1,7 +1,7 @@
 from app import aplication
 from app.models import userModel,admiModel,motorModel, pixModel
-from app.forms import LoginAdminForm, LoginForm, UserForm,AdminForm,MotorForm, PixForm, SaqueForm
-from flask import render_template,url_for, redirect
+from app.forms import LoginAdminForm, LoginForm, UpgradeMotorForm, UserForm,AdminForm,MotorForm, PixForm, SaqueForm
+from flask import render_template,url_for, redirect, flash
 from flask_login import login_user, logout_user, current_user, login_required
 
 
@@ -44,11 +44,17 @@ def funcionamento():
     return render_template('funcionamento.html', obj=obj)
 
 
-@aplication.route('/home/funcionamento/<int:id>', methods=['GET'])
+@aplication.route('/home/funcionamento/<int:id>', methods=['GET','POST'])
 @login_required
 def funcionamentoId(id):
-    obj = motorModel.query.get(id)
-    return render_template('informacaomotor.html', obj=obj)
+    obj = motorModel.query.get_or_404(id)
+    if current_user.balance < obj.upgrade_cost:
+        flash('Saldo insuficiente para realizar o upgrade.', 'danger')
+        form = UpgradeMotorForm()
+        if form.validate_on_submit():
+            return redirect(url_for('funcionamentoId', id=id))
+        return render_template('motorUpgarde.html', form=form, obj=obj)
+    return render_template('motorUpgarde.html', form = form, obj=obj)
 
 
 
@@ -58,11 +64,10 @@ def funcionamentoId(id):
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        context = {}
         user = form.login()
         if user:
             login_user(user, remember=True)
-            return render_template('homeuser.html', context=context)
+            return redirect(url_for('home'))
     return render_template('login.html', form = form)
 
 

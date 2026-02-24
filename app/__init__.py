@@ -26,6 +26,7 @@ def load_user(id):
 from app.routes import homePage
 from app.models import userModel
 from app.models import motorModel
+from app.models import motorUpgradeModel
 from app.models import depositModel
 from app.models import withdrawModel
 from app.models import investmentModel

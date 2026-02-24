@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>gioShop | Upgrade de Sistema</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/motorupgrade.css')}}">
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container py-2">
+            <a class="navbar-brand fw-bold text-primary fs-3" href="{{url_for('home')}}">gioShop</a>
+            <div class="ms-auto">
+                <a href="{{url_for('funcionamento')}}"
+                    class="btn btn-outline-secondary rounded-pill btn-sm px-4 text-white">
+                    Cancelar
+                </a>
+            </div>
+        </div>
+    </nav>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} border-0 rounded-4 shadow-sm mb-4">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10">
+
+                <div class="upgrade-card shadow-lg">
+                    <div class="row g-0">
+                        <div
+                            class="col-12 col-md-5 p-4 p-lg-5 text-center border-bottom border-md-0 border-end-md border-secondary">
+                            <div class="engine-preview mb-4">
+                                <i class="bi bi-rocket-takeoff-fill motor-glow"></i>
+                            </div>
+                            <h3 class="fw-bold mb-1">Nível {{obj.name}}</h3>
+                            <p
+                                class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 rounded-pill px-3">
+                                Status: Pendente</p>
+                        </div>
+
+                        <div class="col-12 col-md-7 p-4 p-lg-5">
+                            <h4 class="fw-bold mb-4">Resumo da Atualização</h4>
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-6">
+                                    <div class="spec-item">
+                                        <small class="text-muted d-block">Investimento</small>
+                                        <span class="fw-bold text-white fs-5">{{obj.upgrade_cost}} Kz</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="spec-item border-success border-opacity-25">
+                                        <small class="text-muted d-block">Lucro Estimado</small>
+                                        <span class="fw-bold text-success fs-5">+75%</span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="spec-item">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <small class="text-muted d-block">Ciclo de Processamento</small>
+                                                <span class="fw-bold">10 Dias Quânticos</span>
+                                            </div>
+                                            <i class="bi bi-cpu text-primary fs-3"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-info bg-primary bg-opacity-10 border-0 rounded-4 p-3 mb-4">
+                                <div class="d-flex">
+                                    <i class="bi bi-info-circle-fill me-2"></i>
+                                    <small>Ao confirmar, o valor será deduzido do seu saldo atual e o motor começará a
+                                        processar instantaneamente.</small>
+                                </div>
+                            </div>
+
+                            <form action="" method="POST">
+                                <button type="submit" class="btn btn-upgrade btn-lg w-100 rounded-pill py-3 text-white">
+                                    CONFIRMAR UPGRADE
+                                </button>
+                            </form>
+
+                            <p class="text-center mt-4 small text-muted">
+                                <i class="bi bi-shield-lock me-1"></i> Transação protegida por criptografia gioShop
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.querySelector('form').addEventListener('submit', function (e) {
+            const saldoAtual = parseFloat("{{ current_user.balance }}");
+            const custoUpgrade = parseFloat("{{ obj.upgrade_cost }}");
+
+            if (saldoAtual < custoUpgrade) {
+                e.preventDefault(); // Impede o envio do formulário
+                alert("Saldo insuficiente no sistema para esta operação.");
+            }
+        });
+    </script>
+</body>
+
+</html>
