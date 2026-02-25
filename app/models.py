@@ -13,6 +13,7 @@ class userModel(base.Model, UserMixin):
     telefone = base.Column(base.String, nullable=True)
     data = base.Column(base.DateTime, default=datetime.utcnow)
     balance = base.Column(base.Float, default=1000.0)  # Saldo inicial para novos usuários
+    avatar = base.Column(base.String, default='default.png')  # Imagem de perfil padrão
     
     motor_id = base.Column(base.Integer, base.ForeignKey('motors.id'), default=0)
     

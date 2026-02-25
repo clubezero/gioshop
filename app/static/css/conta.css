@@ -1,27 +1,63 @@
+/* TEMA DARK GIO SHOP - REGISTRO */
 body {
-    background-color: #0f111a;
-    /* Tom escuro profundo */
-    color: #ffffff;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    background-color: #0b0e11;
+    color: #e9ecef;
     font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
 }
 
 .card {
-    border-radius: 20px;
+    background-color: #161b22;
+    border: 1px solid #30363d !important;
+    border-radius: 1.5rem !important;
+}
+
+.form-control {
+    background-color: #0d1117 !important;
+    border: 1px solid #30363d !important;
+    color: #fff !important;
+    padding: 0.8rem 1.2rem;
+    border-radius: 50px;
+    /* Estilo pílula para inputs */
+}
+
+.form-control:focus {
+    background-color: #0d1117 !important;
+    border-color: #0d6efd !important;
+    color: #fff !important;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
 }
 
 .btn-gradient {
-    background: linear-gradient(45deg, #0d6efd, #0046af);
-    transition: transform 0.2s;
+    background: linear-gradient(45deg, #0d6efd, #0dcaf0);
+    border: none;
+    transition: all 0.3s ease;
 }
 
 .btn-gradient:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(13, 110, 253, 0.3);
+    box-shadow: 0 8px 20px rgba(13, 110, 253, 0.3);
+    opacity: 0.9;
 }
 
-.form-control {
-    border-radius: 10px;
-    padding: 12px;
-    border: 1px solid #dee2e6;
+.badge-tech {
+    background: rgba(13, 110, 253, 0.1);
+    color: #0dcaf0;
+    border: 1px solid rgba(13, 202, 240, 0.2);
+    padding: 8px 16px;
+}
+
+.text-muted {
+    color: #8b949e !important;
+}
+
+/* Ajustes Mobile */
+@media (max-width: 991px) {
+    .display-4 {
+        font-size: 2.5rem;
+    }
+
+    .container {
+        padding-top: 3rem !important;
+    }
 }

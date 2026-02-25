@@ -1,6 +1,6 @@
 from app import aplication
-from app.models import userModel,admiModel,motorModel, pixModel
-from app.forms import LoginAdminForm, LoginForm, UpgradeMotorForm, UserForm,AdminForm,MotorForm, PixForm, SaqueForm
+from app.models import userModel,admiModel,motorModel, pixModel,depositModel
+from app.forms import DepositForm, LoginAdminForm, LoginForm, UpdateUserForm, UpgradeMotorForm, UserForm,AdminForm,MotorForm, PixForm, SaqueForm
 from flask import render_template,url_for, redirect, flash
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -10,6 +10,10 @@ from flask_login import login_user, logout_user, current_user, login_required
 def homePage():
     return render_template('index.html')
 
+@aplication.route('/sobre/')
+def inforLogin():
+    return render_template('info.html')
+
 ##############ROTAS DE USUÁRIO LOGADO HOME##############
 
 @aplication.route('/home/')
@@ -17,9 +21,6 @@ def homePage():
 def home():
     return render_template('homeuser.html')
 
-@aplication.route('/home/sobre/')
-def inforLogin():
-    return render_template('info.html')
 
 @aplication.route('/home/clientes/')
 @login_required
@@ -81,7 +82,7 @@ def logout():
 ##########ROTAS DE PERFIL E FORMULARIOS DE CADASTROS##############
 
 
-@aplication.route('/usuario/cadastrar/', methods=['POST', 'GET'])
+@aplication.route('/register/', methods=['POST', 'GET'])
 def create():
     form = UserForm()
     if form.validate_on_submit():
@@ -90,22 +91,33 @@ def create():
         return redirect(url_for('home'))
     return render_template('conta.html', form = form)
 
+@aplication.route('/home/update/', methods=['POST', 'GET'])
+@login_required
+def updateuser():
+    form = UpdateUserForm()
+    if form.validate_on_submit():
+        user = form.save(current_user)
+        if user:
+            flash('Perfil atualizado com sucesso!', 'success')
+            return redirect(url_for('home'))
+    return render_template('perfil.html', form = form)
+
 @aplication.route('/motor/cadastrar/', methods=['POST', 'GET'])
 def createmoor():
     form = MotorForm()
     if form.validate_on_submit():
-        form.save(current_user.id)
+        form.save()
     return render_template('motor.html', form = form)
 
 
-@aplication.route('/home/perfil/', methods=['POST', 'GET'])
+@aplication.route('/home/saque/', methods=['POST', 'GET'])
 @login_required
-def perfil():
+def confi_saq():
     form = PixForm()
     if form.validate_on_submit():
         form.save(current_user.id)
         return redirect(url_for('home'))
-    return render_template('perfil.html', form =form)
+    return render_template('confi_saque.html', form =form)
 
 @aplication.route('/home/saque/', methods=['POST', 'GET'])
 @login_required
@@ -156,7 +168,19 @@ def users():
 
 
 
-
+@aplication.route('/deposito', methods=['GET', 'POST'])
+@login_required
+def deposito():
+    form = DepositForm()
+    if form.validate_on_submit():
+        obj = depositModel.query.filter_by(user_id=current_user.id, status='Pendente').first()
+        if obj:
+            flash('Você já tem um depósito pendente!', 'warning')
+        else:
+            form.save(current_user.id)
+            flash('Depósito enviado para análise!', 'success')
+        return redirect(url_for('home'))
+    return render_template('deposito.html',  form=form)
 
 
 

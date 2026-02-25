@@ -22,7 +22,7 @@
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow">
                     <li><a class="dropdown-item" href="{{url_for('marke')}}">Marketplace</a></li>
                     <li><a class="dropdown-item" href="#">Solicitar Saque</a></li>
-                    <li><a class="dropdown-item" href="#">Carteira</a></li>
+                    <li><a class="dropdown-item" href="{{url_for('deposito')}}">Carteira</a></li>
                     <li><a class="dropdown-item" href="#">Histórico</a></li>
                     <li>
                         <hr class="dropdown-divider">
@@ -41,8 +41,12 @@
                     <div class="profile-header"></div>
                     <div class="card-body p-4">
                         <div class="profile-avatar-wrapper mb-3">
-                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Giovanni"
-                                class="profile-avatar shadow" alt="Avatar">
+
+                            <img src="{{ url_for('static', filename='data/img/post/' + (current_user.avatar if current_user.avatar else 'default.png')) }}"
+                                class="profile-avatar shadow"
+                                style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;"
+                                alt="Avatar de {{ current_user.nome }}">
+
                             <div class="mt-2 fw-bold text-info small uppercase">
                                 {% if current_user.motor_id == 0 %} MOTOR PADRÃO {% else %} NÍVEL ATIVO {% endif %}
                             </div>
@@ -54,7 +58,9 @@
                         </p>
 
                         <div class="d-grid">
-                            <a class="btn btn-primary rounded-pill" href="{{url_for('perfil')}}">Editar Perfil</a>
+                            <a class="btn btn-primary rounded-pill" href="{{url_for('updateuser')}}">Editar Perfil</a>
+                            <a class="btn btn-outline-primary rounded-pill mt-2" href="{{url_for('confi_saq')}}">Dados
+                                da Conta</a>
                         </div>
                     </div>
                 </div>
@@ -126,13 +132,17 @@
                 <div class="card p-4">
                     <h5 class="text-success fw-bold mb-4">Solicitar Saque</h5>
                     <div class="mb-3">
-                        <label class="form-label small text-light">Chave PIX / Carteira</label>
+                        <label class="form-label small text-light">IBAN/PIX</label>
                         <input type="text" class="form-control rounded-pill bg-dark border-secondary text-white"
-                            value="{{current_user.pix | last}}" readonly>
+                            placeholder="Ex: 000.000.000-00 ou 12345678901234567890">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-light">Valor</label>
+                        <input type="text" class="form-control rounded-pill bg-dark border-secondary text-white"
+                            placeholder="Valor mínimo: 10.000 Kz">
                     </div>
                     <div class="d-grid d-md-flex">
-                        <a href="{{url_for('solicitar_saque')}}"
-                            class="btn btn-primary rounded-pill px-5 py-2">Confirmar Saque</a>
+                        <a href="#" class="btn btn-primary rounded-pill px-5 py-2">Solicitar Saque</a>
                     </div>
                 </div>
 

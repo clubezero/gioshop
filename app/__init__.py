@@ -11,6 +11,23 @@ aplication = Flask(__name__)
 aplication.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 aplication.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 aplication.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+# Define o caminho absoluto para a pasta de imagens
+# Isso aponta para app/static/data/img/
+UPLOAD_FOLDER = os.path.join(aplication.root_path, 'static', 'data', 'img')
+
+# Cria a pasta caso ela não exista (muito importante!)
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+aplication.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+        # Configuração do caminho absoluto para a pasta de uploads
+        # Isso cria um caminho como: seu_projeto/static/uploads/post
+        #UPLOAD_FOLDER = os.path.join(aplication.root_path, 'static', 'uploads', 'post')
+        #aplication.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+        # Engenharia de Segurança: Garantir que a pasta exista ao iniciar o servidor
+        #if not os.path.exists(aplication.config['UPLOAD_FOLDER']):
+         #   os.makedirs(aplication.config['UPLOAD_FOLDER'])
 
 base = SQLAlchemy(aplication)
 mig = Migrate(aplication, base)

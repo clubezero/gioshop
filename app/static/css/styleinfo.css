@@ -1,64 +1,70 @@
-/* TEMA DARK & ENGENHARIA DIGITAL */
+/* TEMA DARK GIO SHOP */
 body {
     background-color: #0b0e11;
     color: #e9ecef;
     font-family: 'Inter', sans-serif;
 }
 
-.navbar {
-    background-color: rgba(11, 14, 17, 0.98);
-    border-bottom: 1px solid #2d3436;
-}
-
 .header-section {
     background-color: #0d1117;
     border-bottom: 1px solid #30363d;
-    padding: 80px 0;
 }
 
-/* Accordion Customizado Dark */
-.accordion-item {
-    background-color: #161b22 !important;
-    border: 1px solid #30363d !important;
-    margin-bottom: 10px;
-    border-radius: 12px !important;
-    overflow: hidden;
+/* Estilo dos Ícones */
+.icon-box {
+    width: 70px;
+    height: 70px;
+    background: rgba(13, 110, 253, 0.1);
+    color: #0d6efd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(13, 110, 253, 0.2);
+    transition: all 0.3s ease;
 }
 
-.accordion-button {
-    background-color: #161b22 !important;
-    color: #e9ecef !important;
-    box-shadow: none !important;
-    padding: 1.25rem;
+.icon-box:hover {
+    transform: scale(1.1) rotate(5deg);
+    background: #0d6efd;
+    color: white;
 }
 
-.accordion-button:not(.collapsed) {
-    color: #0d6efd !important;
-    border-bottom: 1px solid #30363d;
+/* Cards da Jornada */
+.step-card {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    transition: border-color 0.3s;
 }
 
-.accordion-button::after {
-    filter: invert(1);
-    /* Torna a seta branca */
+.step-card:hover {
+    border-color: #0d6efd;
 }
 
-.accordion-body {
+.bg-light-custom {
     background-color: #0d1117;
-    color: #8b949e;
-    line-height: 1.6;
+}
+
+/* Linha conectora apenas em Desktop */
+@media (min-width: 992px) {
+    .step-line {
+        position: relative;
+    }
+
+    .step-line::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 10%;
+        right: 10%;
+        height: 2px;
+        background: dashed #30363d;
+        z-index: 0;
+    }
 }
 
 .text-muted {
     color: #8b949e !important;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    .display-5 {
-        font-size: 2.2rem;
-    }
-
-    .header-section {
-        padding: 40px 0;
-    }
 }
