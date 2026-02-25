@@ -19,7 +19,8 @@ def inforLogin():
 @aplication.route('/home/')
 @login_required
 def home():
-    return render_template('homeuser.html')
+    obj = obj = depositModel.query.filter_by(user_id=current_user.id, status='Pendente').first()
+    return render_template('homeuser.html', obj=obj)
 
 
 @aplication.route('/home/clientes/')
@@ -180,7 +181,7 @@ def deposito():
             form.save(current_user.id)
             flash('Depósito enviado para análise!', 'success')
         return redirect(url_for('home'))
-    return render_template('deposito.html',  form=form)
+    return render_template('deposito.html', obj=obj, form=form)
 
 
 
