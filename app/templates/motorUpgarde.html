@@ -17,7 +17,9 @@
 
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container py-2">
-            <a class="navbar-brand fw-bold text-primary fs-3" href="{{url_for('home')}}">gioShop</a>
+            <a href="{{url_for('home')}}" class="btn btn-outline-secondary btn-sm rounded-pill text-white px-3">
+                <i class="bi bi-house-door me-1"></i>
+            </a>
             <div class="ms-auto">
                 <a href="{{url_for('funcionamento')}}"
                     class="btn btn-outline-secondary rounded-pill btn-sm px-4 text-white">
@@ -94,9 +96,9 @@
                             </div>
 
                             <form action="" method="POST">
-                                <button type="submit" class="btn btn-upgrade btn-lg w-100 rounded-pill py-3 text-white">
-                                    CONFIRMAR UPGRADE
-                                </button>
+                                {{ form.csrf_token() }}
+
+                                {{ form.btn(class="btn btn-upgrade btn-lg w-100 rounded-pill py-3 text-white") }}
                             </form>
 
                             <p class="text-center mt-4 small text-muted">

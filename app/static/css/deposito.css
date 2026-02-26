@@ -1,0 +1,43 @@
+body {
+    background-color: #0b0e11;
+    color: #e9ecef;
+    font-family: 'Inter', sans-serif;
+}
+
+.navbar {
+    background-color: rgba(11, 14, 17, 0.98);
+    border-bottom: 1px solid #30363d;
+}
+
+.deposit-card {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 2rem;
+}
+
+.form-control {
+    background-color: #0d1117 !important;
+    border: 1px solid #30363d !important;
+    color: #fff !important;
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.form-control:focus {
+    border-color: #0d6efd !important;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.1);
+}
+
+.instruction-box {
+    background: rgba(13, 110, 253, 0.05);
+    border-left: 4px solid #0d6efd;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.btn-deposit {
+    background: linear-gradient(45deg, #0d6efd, #0dcaf0);
+    border: none;
+    font-weight: bold;
+    letter-spacing: 1px;
+}

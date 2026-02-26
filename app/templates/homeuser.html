@@ -14,7 +14,9 @@
 
     <nav class="navbar navbar-expand-lg sticky-top mb-4">
         <div class="container">
-            <a class="navbar-brand fw-bold text-primary fs-3" href="{{url_for('home')}}">gioShop</a>
+            <a href="{{url_for('home')}}" class="btn btn-outline-secondary btn-sm rounded-pill text-white px-3">
+                <i class="bi bi-house-door me-1"></i>
+            </a>
             <div class="dropdown">
                 <button class="btn btn-dark border-secondary rounded-pill dropdown-toggle" data-bs-toggle="dropdown">
                     <i class="bi bi-person-circle text-success"></i>
@@ -23,7 +25,7 @@
                     <li><a class="dropdown-item" href="{{url_for('marke')}}">Marketplace</a></li>
                     <li><a class="dropdown-item" href="#">Solicitar Saque</a></li>
                     <li><a class="dropdown-item" href="{{url_for('deposito')}}">Carteira</a></li>
-                    <li><a class="dropdown-item" href="#">Histórico</a></li>
+                    <li><a class="dropdown-item" href="{{url_for('extrato')}}">Histórico</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
@@ -47,9 +49,6 @@
                                 style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;"
                                 alt="Avatar de {{ current_user.nome }}">
 
-                            <div class="mt-2 fw-bold text-info small uppercase">
-                                {% if current_user.motor_id == 0 %} MOTOR PADRÃO {% else %} NÍVEL ATIVO {% endif %}
-                            </div>
                         </div>
                         <h4 class="text-light fw-bold mb-1">{{current_user.nome}}</h4>
                         <p class="text-muted small mb-3">
@@ -83,7 +82,7 @@
                 <div class="card p-4 mb-4 border-start border-primary border-5">
                     <div class="row align-items-center">
                         <div class="col-12 col-md-7">
-                            <h5 class="fw-bold text-primary mb-1">Status do Motor: Padrão</h5>
+                            <h5 class="fw-bold text-primary mb-1">Status do Motor: {{upM.motor.name}}</h5>
                             <p class=" small text-light">Taxa de aceleração: <strong>2% a cada 10
                                     dias</strong>.</p>
 
@@ -112,7 +111,7 @@
                     <div class="col-6 col-md-4">
                         <div class="stat-box">
                             <small class="text-muted d-block">Saldo</small>
-                            <span class="fw-bold fs-5">{{obj.amount}} Kz</span>
+                            <span class="fw-bold fs-5">{{ current_user.balance | format_currency }} Kz</span>
                         </div>
                     </div>
                     <div class="col-6 col-md-4">
@@ -131,19 +130,35 @@
 
                 <div class="card p-4">
                     <h5 class="text-success fw-bold mb-4">Solicitar Saque</h5>
-                    <div class="mb-3">
-                        <label class="form-label small text-light">IBAN/PIX</label>
-                        <input type="text" class="form-control rounded-pill bg-dark border-secondary text-white"
-                            placeholder="Ex: 000.000.000-00 ou 12345678901234567890">
+
+                    <div class="row">
+                        <div class="col-5 col-6 col-md-4">
+                            <label class="form-label small text-light">Instituição</label>
+                            <input type="text" class="form-control rounded-pill bg-dark border-secondary text-ligth"
+                                placeholder="Ex: PIX/Banco/Carteira Digital">
+                        </div>
+                        <div class="col-5 col-6 col-md-4">
+                            <label class="form-label small text-light">Chave/IBAN</label>
+                            <input type="text" class="form-control rounded-pill bg-dark border-secondary text-ligth"
+                                placeholder="Ex: 000.000.000-00 ou 12345678901234567890">
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label small text-light">Valor</label>
-                        <input type="text" class="form-control rounded-pill bg-dark border-secondary text-white"
-                            placeholder="Valor mínimo: 10.000 Kz">
+
+
+
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <label class="form-label small text-light">Valor</label>
+                            <input type="text" class="form-control rounded-pill bg-dark border-secondary text-ligth"
+                                placeholder="Valor mínimo: 10.000 Kz">
+                        </div>
+                        <div class="col-12 mt-3 col-md-4">
+                            <div class="d-grid d-md-flex">
+                                <a href="#" class="btn btn-primary rounded-pill px-5 py-2">Solicitar Saque</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="d-grid d-md-flex">
-                        <a href="#" class="btn btn-primary rounded-pill px-5 py-2">Solicitar Saque</a>
-                    </div>
+
                 </div>
 
             </div>
@@ -179,7 +194,7 @@
                 daysLabel.innerText = `Faltam ${10 - diffDays} dias para o rendimento.`;
             }
         }
-        updateTaskProgress('2026-02-19');
+        updateTaskProgress("{{ upM.data_upgrade.strftime('%Y-%m-%d') }}");
     </script>
 </body>
 

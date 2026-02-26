@@ -51,7 +51,8 @@
                     <div class="col-md-3">
                         <div class="admin-card shadow-sm p-4 text-center">
                             <small class="text-muted d-block text-uppercase fw-bold">Capital em Ciclo</small>
-                            <h3 class="fw-bold text-primary">1.250.000 Kz</h3>
+                            <h3 class="fw-bold text-primary">{{ cp | format_currency }} Kz</td>
+                            </h3>
                             <div class="progress mt-2" style="height: 5px;">
                                 <div class="progress-bar" style="width: 70%"></div>
                             </div>
@@ -67,17 +68,19 @@
                     <div class="col-md-3">
                         <div class="admin-card shadow-sm p-4 text-center">
                             <small class="text-muted d-block text-uppercase fw-bold">Saques Pendentes</small>
-                            <h3 class="fw-bold text-danger">12</h3>
+                            <h3 class="fw-bold text-black">12</h3>
                             <button class="btn btn-link btn-sm text-decoration-none p-0">Revisar Agora</button>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="admin-card shadow-sm p-4 text-center border-bottom border-success border-4">
-                            <small class="text-muted d-block text-uppercase fw-bold">Taxa de Conversão</small>
-                            <h3 class="fw-bold text-success">8.4%</h3>
-                            <small class="text-muted">Usuário 0 -> Motor 1</small>
+                        <div class="admin-card shadow-sm p-4 text-center">
+                            <small class="text-muted d-block text-uppercase fw-bold">Depositos Pendentes</small>
+                            <h3 class="fw-bold text-danger">{{dp|length}}</h3>
+                            <a href="{{url_for('aprovar')}}"
+                                class="btn btn-link btn-sm text-decoration-none p-0">Revisar Agora</a>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="admin-card shadow-sm p-4">

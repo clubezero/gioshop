@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>gioShop Admin | Gestão de Fluxo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #0b0e11;
+            color: #e9ecef;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .admin-card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 1.5rem;
+        }
+
+        .table {
+            color: #e9ecef;
+            border-color: #30363d;
+        }
+
+        .table thead {
+            background-color: #0d1117;
+        }
+
+        .status-pendente {
+            color: #ffc107;
+            background: rgba(255, 193, 7, 0.1);
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+
+        .status-aprovado {
+            color: #198754;
+            background: rgba(25, 135, 84, 0.1);
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+
+        .btn-view {
+            background-color: #30363d;
+            color: white;
+            border: none;
+        }
+
+        .btn-approve {
+            background: linear-gradient(45deg, #198754, #20c997);
+            border: none;
+            color: white;
+        }
+
+        .img-thumb-proof {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg border-bottom border-secondary border-opacity-25 mb-5">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary fs-3" href="#">gioShop <span
+                    class="text-white fs-6 opacity-50">Admin</span></a>
+            <div class="ms-auto text-danger small">
+                <i class="bi bi-shield-lock-fill me-1"></i> Modo Supervisor
+            </div>
+        </div>
+    </nav>
+
+    <div class="container pb-5">
+        <div class="row g-4">
+            <div class="col-12 col-md-4">
+                <div class="admin-card p-4">
+                    <small class="text-light d-block mb-1">DEPÓSITOS PENDENTES</small>
+                    <h2 class="fw-bold text-warning">{{ dp|length }}</h2>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="admin-card p-4 p-md-5 shadow">
+                    <h4 class="fw-bold mb-4"><i class="bi bi-activity me-2 text-primary"></i>Fila de Validação</h4>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Operador</th>
+                                    <th>Valor</th>
+                                    <th>Comprovante</th>
+                                    <th>Data/Hora</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for dep in depositos %}
+                                <tr>
+                                    <td>
+                                        <div class="fw-bold">{{ dep.user.nome }}</div>
+                                        <small class="text-muted">ID: #{{ dep.user_id }}</small>
+                                    </td>
+                                    <td class="fw-bold text-primary">{{ dep.amount }} Kz</td>
+                                    <td>
+
+                                        <div class="preview-trigger" style="cursor: pointer;"
+                                            data-url="{{ url_for('static', filename=dep.proof_url) }}"
+                                            onclick="verComprovante(this.getAttribute('data-url'))">
+
+                                            {% if dep.proof_url and dep.proof_url.lower().endswith('.pdf') %}
+                                            <div
+                                                class="img-thumb-proof d-flex align-items-center justify-content-center bg-danger text-white">
+                                                <i class="bi bi-file-earmark-pdf"></i>
+                                            </div>
+                                            {% else %}
+                                            <img src="{{ url_for('static', filename=dep.proof_url) }}"
+                                                class="img-thumb-proof"
+                                                onerror="this.src='https://placehold.co/40x40?text=Err'">
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                    <td class="small text-muted">{{ dep.created_at.strftime('%d/%m/%Y %H:%M') }}</td>
+                                    <td>
+                                        <span class="status-{{ dep.status | lower }}">{{ dep.status }}</span>
+                                    </td>
+                                    <td class="text-end">
+                                        {% if dep.status == 'Pendente' %}
+                                        <a href="{{ url_for('aprovar_deposito', deposito_id=dep.id) }}"
+                                            class="btn btn-approve btn-sm rounded-pill px-3 fw-bold">
+                                            APROVAR
+                                        </a>
+                                        {% else %}
+                                        <i class="bi bi-check-all text-success fs-4"></i>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content admin-card">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title text-white">Comprovante de Depósito</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center p-0">
+                    <div id="previewContent"
+                        style="min-height: 400px; display: flex; align-items: center; justify-content: center;">
+                        <div class="spinner-border text-primary" role="status"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function verComprovante(url) {
+            const content = document.getElementById('previewContent');
+            const modal = new bootstrap.Modal(document.getElementById('previewModal'));
+
+            // Limpa conteúdo e mostra o modal
+            content.innerHTML = '<div class="spinner-border text-primary" role="status"></div>';
+            modal.show();
+
+            // Verifica a extensão do arquivo
+            const extensao = url.split('.').pop().toLowerCase();
+
+            setTimeout(() => {
+                if (extensao === 'pdf') {
+                    // Renderiza PDF usando um <iframe> ou <embed>
+                    content.innerHTML = `<embed src="${url}" type="application/pdf" width="100%" height="600px" />`;
+                } else {
+                    // Renderiza Imagem
+                    content.innerHTML = `<img src="${url}" class="img-fluid p-2" style="max-height: 80vh;">`;
+                }
+            }, 300); // Pequeno delay para o efeito visual
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

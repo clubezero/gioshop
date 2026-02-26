@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>gioShop | Extrato de Capital</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #0b0e11;
+            color: #e9ecef;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .navbar {
+            background-color: rgba(11, 14, 17, 0.98);
+            border-bottom: 1px solid #30363d;
+        }
+
+        .balance-hero {
+            background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
+            border: 1px solid #30363d;
+            border-radius: 2rem;
+            padding: 2rem;
+        }
+
+        .transaction-card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 1.2rem;
+            transition: transform 0.2s;
+        }
+
+        .transaction-card:hover {
+            transform: translateX(5px);
+            border-color: #0d6efd;
+        }
+
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .bg-pendente {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+
+        .bg-aprovado {
+            background: rgba(25, 135, 84, 0.1);
+            color: #198754;
+        }
+
+        .bg-recusado {
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
+
+        .icon-circle {
+            width: 45px;
+            height: 45px;
+            background: rgba(13, 110, 253, 0.1);
+            color: #0d6efd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg mb-4">
+        <div class="container">
+            <a href="{{url_for('home')}}" class="btn btn-outline-secondary btn-sm rounded-pill text-white px-3">
+                <i class="bi bi-house-door me-1"></i>
+            </a>
+        </div>
+    </nav>
+
+    <div class="container pb-5">
+        <div class="row mb-5">
+            <div class="col-12">
+                <div
+                    class="balance-hero shadow-lg text-center text-md-start d-md-flex align-items-center justify-content-between">
+                    <div>
+                        <small class="text-muted text-uppercase fw-bold">Saldo Consolidado</small>
+                        <h1 class="display-5 fw-bold text-primary mb-0">
+                            {{ "{:,.2f}".format(current_user.saldo_actual) }} <span class="fs-4">Kz</span>
+                        </h1>
+                    </div>
+                    <div class="mt-3 mt-md-0">
+                        <a href="{{url_for('deposito')}}" class="btn btn-primary btn-lg rounded-pill px-4 shadow">
+                            <i class="bi bi-plus-circle me-2"></i>NOVO DEPÓSITO
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h5 class="fw-bold mb-4 px-2">Histórico de Transações</h5>
+
+        <div class="row g-3">
+            {% if historico %}
+            {% for dep in historico %}
+            <div class="col-12">
+                <div class="transaction-card p-3 shadow-sm d-flex align-items-center">
+                    <div class="icon-circle me-3">
+                        <i class="bi bi-arrow-down-left-circle"></i>
+                    </div>
+
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="fw-bold mb-0">Depósito via Transferência</h6>
+                            <span class="fw-bold text-white">+ {{ "{:,.2f}".format(dep.amount) }} Kz</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-1">
+                            <small class="text-muted">{{ dep.created_at.strftime('%d %b, %Y às %H:%M') }}</small>
+                            <span class="status-badge bg-{{ dep.status | lower }}">
+                                {{ dep.status }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="col-12 text-center py-5">
+                <i class="bi bi-inbox text-muted display-1"></i>
+                <p class="text-muted mt-3">Nenhuma transação encontrada no sistema.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

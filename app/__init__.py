@@ -11,23 +11,11 @@ aplication = Flask(__name__)
 aplication.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 aplication.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 aplication.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-# Define o caminho absoluto para a pasta de imagens
-# Isso aponta para app/static/data/img/
 UPLOAD_FOLDER = os.path.join(aplication.root_path, 'static', 'data', 'img')
-
-# Cria a pasta caso ela não exista (muito importante!)
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
-
 aplication.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-        # Configuração do caminho absoluto para a pasta de uploads
-        # Isso cria um caminho como: seu_projeto/static/uploads/post
-        #UPLOAD_FOLDER = os.path.join(aplication.root_path, 'static', 'uploads', 'post')
-        #aplication.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-        # Engenharia de Segurança: Garantir que a pasta exista ao iniciar o servidor
-        #if not os.path.exists(aplication.config['UPLOAD_FOLDER']):
-         #   os.makedirs(aplication.config['UPLOAD_FOLDER'])
 
 base = SQLAlchemy(aplication)
 mig = Migrate(aplication, base)
@@ -36,9 +24,34 @@ Login_manager.login_view = 'home'
 bcrypt = Bcrypt(aplication)
 
 @Login_manager.user_loader
-def load_user(id):
-    return userModel.query.get(int(id))
+def load_user(session_id):
+    if not session_id:
+        return None
 
+    try:
+        # O session_id virá como "user_1" ou "admin_1"
+        # O .split("_", 1) divide a string no primeiro "_"
+        prefix, user_id = session_id.split("_", 1)
+        user_id = int(user_id) # Converte a parte do número para inteiro
+
+        if prefix == "user":
+            return userModel.query.get(user_id)
+        elif prefix == "admin":
+            return admiModel.query.get(user_id)
+            
+    except (ValueError, AttributeError):
+        return None
+
+    return None
+
+
+def format_currency(value):
+    if value is None:
+        return "0,00"
+
+    formatted = "{:,.2f}".format(float(value))
+    return formatted.replace(",", "X").replace(".", ",").replace("X", ".")
+aplication.jinja_env.filters['format_currency'] = format_currency
 
 from app.routes import homePage
 from app.models import userModel

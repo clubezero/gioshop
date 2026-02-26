@@ -131,13 +131,19 @@ class SaqueForm(FlaskForm):
 
 
 class UpgradeMotorForm(FlaskForm):
+    btn = SubmitField('Realizar Upgrade')
+
     def save(self, id_user, motor_id):
         upgrade = motorUpgradeModel(
             user_id = id_user,
             motor_id = motor_id,
         )
-        base.session.add(upgrade)
-        base.session.commit()
+        try:
+            base.session.add(upgrade)
+            base.session.commit()
+        except Exception as e:
+            base.session.rollback()
+            raise e
 
 
 

@@ -1,6 +1,7 @@
 from app import base
 from datetime import datetime
 from flask_login import UserMixin
+from sqlalchemy import func
 
 # 1. Tabela de Usuários
 class userModel(base.Model, UserMixin):
@@ -19,11 +20,28 @@ class userModel(base.Model, UserMixin):
     
     # Relações usando os nomes das classes (Strings)
     investimentos = base.relationship('investmentModel', backref='investidor', lazy=True)
-    depositos = base.relationship('depositModel', backref='cliente', lazy=True)
+    depositos = base.relationship('depositModel', backref='user_ref', lazy=True)
     saques = base.relationship('withdrawModel', backref='beneficiario', lazy=True)
     vendas = base.relationship('saleModel', backref='comprador', lazy=True)
     historico_motores = base.relationship('motorUpgradeModel', backref='investidor', lazy=True)
     pix = base.relationship('pixModel', backref='cliente', lazy=True)
+
+    @property
+    def saldo_actual(self):
+        # Filtra apenas os depósitos com status 'Aprovado' e soma o campo 'amount'
+        total = base.session.query(func.sum(depositModel.amount)).filter(
+            depositModel.user_id == self.id,
+            depositModel.status == 'Aprovado'
+        ).scalar()
+        
+        # Retorna o total ou 0.0 caso não existam depósitos aprovados
+        return total if total else 0.0
+    def get_id(self):
+        # Retorna o ID com o prefixo para a sessão
+        return f"user_{self.id}"
+    @property
+    def is_admin(self):
+        return False
 
 # 2. Tabela de Configuração de Motores
 class motorModel(base.Model):
@@ -53,15 +71,16 @@ class depositModel(base.Model):
     proof_url = base.Column(base.String, nullable=True)
     status = base.Column(base.String, default='Pendente') 
     created_at = base.Column(base.DateTime, default=datetime.utcnow)
+    user = base.relationship('userModel', backref='meus_depositos')
 
 # 4. Tabela de Saques
 class withdrawModel(base.Model):
     __tablename__ = 'withdraws'
     id = base.Column(base.Integer, primary_key=True)
-    user_id = base.Column(base.Integer, base.ForeignKey('users.id'), nullable=True)
-    amount = base.Column(base.Float, nullable=True)
-    bank_details = base.Column(base.Text, nullable=True)
-    status = base.Column(base.String, default='Pendente')
+    user_id = base.Column(base.Integer, base.ForeignKey('users.id'), nullable=False)
+    amount = base.Column(base.Float, nullable=False)
+    iban = base.Column(base.String(50), nullable=False) # Para onde o dinheiro será enviado
+    status = base.Column(base.String, default='Pendente') # Pendente, Concluído, Rejeitado
     created_at = base.Column(base.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
@@ -108,6 +127,12 @@ class admiModel(base.Model, UserMixin):
     email = base.Column(base.String, unique=True, nullable=True)
     senha = base.Column(base.String, nullable=True)
     telefone = base.Column(base.String, nullable=True)
+
+    def get_id(self):
+        return f"admin_{self.id}"
+    @property
+    def is_admin(self):
+        return True
 
 # Tabela de Pix
 class pixModel(base.Model):
