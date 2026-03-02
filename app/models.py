@@ -16,7 +16,7 @@ class userModel(base.Model, UserMixin):
     balance = base.Column(base.Float, default=1000.0)  # Saldo inicial para novos usuários
     avatar = base.Column(base.String, default='default.png')  # Imagem de perfil padrão
     
-    motor_id = base.Column(base.Integer, base.ForeignKey('motors.id'), default=0)
+    motor_id = base.Column(base.Integer, base.ForeignKey('motors.id'), default=None, nullable=True) # Motor atual do usuário (FK para tabela de motores)
     
     # Relações usando os nomes das classes (Strings)
     investimentos = base.relationship('investmentModel', backref='investidor', lazy=True)

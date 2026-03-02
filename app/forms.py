@@ -34,7 +34,7 @@ class UserForm(FlaskForm):
             sobrenome = self.sobrenome.data,
             email = self.email.data,
             senha = senha_hash,
-            telefone = self.telefone.data
+            telefone = self.telefone.data,
         )
 
         base.session.add(user)

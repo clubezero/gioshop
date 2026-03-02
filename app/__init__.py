@@ -64,3 +64,7 @@ from app.models import productModel
 from app.models import saleModel
 from app.models import admiModel
 from app.models import pixModel
+
+
+with aplication.app_context():
+    base.create_all()
