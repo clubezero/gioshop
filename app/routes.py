@@ -1,8 +1,11 @@
+import requests
 from app import base
+from datetime import datetime
+from sqlalchemy import func
 
 from app import aplication
-from app.models import motorUpgradeModel, userModel,admiModel,motorModel, pixModel,depositModel, withdrawModel
-from app.forms import DepositForm, LoginAdminForm, LoginForm, UpdateUserForm, UpgradeMotorForm, UserForm,AdminForm,MotorForm, PixForm, SaqueForm
+from app.models import motorUpgradeModel, userModel,admiModel,motorModel, pixModel,depositModel, withdrawModel,userModel
+from app.forms import DepositForm, LoginAdminForm, LoginForm, UpdateUserForm, UpgradeMotorForm, UserForm,AdminForm,MotorForm, PixForm, saqueForm
 from flask import render_template, request,url_for, redirect, flash
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -21,9 +24,25 @@ def inforLogin():
 @aplication.route('/home/')
 @login_required
 def home():
+    obj = depositModel.query.filter_by(user_id=current_user.id, status='Pendente').first()
     upM = motorUpgradeModel.query.filter_by(user_id=current_user.id).order_by(motorUpgradeModel.data_upgrade.desc()).first()
-    obj = obj = depositModel.query.filter_by(user_id=current_user.id, status='Pendente').first()
-    return render_template('homeuser.html', obj=obj, upM=upM)
+
+    withdraw_sum = base.session.query(func.sum(withdrawModel.amount)).filter_by(
+        user_id=current_user.id, status='Pendente'
+    ).scalar() or 0
+    withdrawC_sum = base.session.query(func.sum(withdrawModel.amount)).filter_by(
+        user_id=current_user.id, status='Concluído'
+    ).scalar() or 0
+    withdraw = {'amount': withdraw_sum}
+    withdrawC = {'amount': withdrawC_sum}
+    if upM is None:
+         data_motor = datetime.now().strftime("%Y-%m-%d")
+         nome_motor = "Padrao"
+         return render_template('homeuser.html', obj=obj, data_motor=data_motor, 
+            nome_motor=nome_motor, withdraw=withdraw, withdrawC=withdrawC)
+    else:
+        return render_template('homeuser.html', obj=obj, upM=upM, 
+            withdraw=withdraw, withdrawC=withdrawC)
 
 
 @aplication.route('/home/clientes/')
@@ -39,7 +58,17 @@ def infor():
 @aplication.route('/home/marketplace/')
 @login_required
 def marke():
-    return render_template('marketplace.html')
+    # Consumindo a API pública de produtos
+    url_api = "https://fakestoreapi.com/products"
+    
+    try:
+        response = requests.get(url_api, timeout=5)
+        produtos = response.json() # Transforma a resposta em uma lista de dicionários
+    except Exception as e:
+        print(f"Erro ao conectar com a API: {e}")
+        produtos = [] # Lista vazia para não quebrar a página caso a API caia
+
+    return render_template('marketplace.html', produtos=produtos)
 
 
 @aplication.route('/home/funcionamento/', methods=['POST', 'GET'])
@@ -55,9 +84,9 @@ def funcionamentoId(id):
     obj = motorModel.query.get_or_404(id)
     form = UpgradeMotorForm()
     if form.validate_on_submit():
-        if current_user.balance >= obj.upgrade_cost:
+        if current_user.saldo_atual >= obj.upgrade_cost:
             try:
-                current_user.balance -= obj.upgrade_cost
+                current_user.saldo_atual -= obj.upgrade_cost
                 form.save(current_user.id, obj.id)  # Salva o upgrade no histórico           
                 flash(f'Upgrade do {obj.nome} realizado com sucesso!', 'success')
                 return redirect(url_for('funcionamentoId', id=id))
@@ -71,25 +100,6 @@ def funcionamentoId(id):
     return render_template('motorUpgarde.html', form=form, obj=obj)
 
 
-
-
-
-
-#@aplication.route('/home/funcionamento/<int:id>', methods=['GET','POST'])
-#@login_required
-#def funcionamentoId(id):
-#    obj = motorModel.query.get_or_404(id)
-#    if current_user.balance < obj.upgrade_cost:
-#        flash('Saldo insuficiente para realizar o upgrade.', 'danger')
-#        form = UpgradeMotorForm()
-#        if form.validate_on_submit():
-#            return redirect(url_for('funcionamentoId', id=id))
-#        return render_template('motorUpgarde.html', form=form, obj=obj)
-#    return render_template('motorUpgarde.html', obj=obj)
-
-
-
-############ROTAS DE LOGIN, LOGOUT##############
 
 @aplication.route('/login/', methods=['POST', 'GET'])
 def login():
@@ -140,7 +150,7 @@ def createmoor():
     return render_template('motor.html', form = form)
 
 
-@aplication.route('/home/saque/', methods=['POST', 'GET'])
+@aplication.route('/home/configuracao/', methods=['POST', 'GET'])
 @login_required
 def confi_saq():
     form = PixForm()
@@ -149,15 +159,54 @@ def confi_saq():
         return redirect(url_for('home'))
     return render_template('confi_saque.html', form =form)
 
-@aplication.route('/home/saque/', methods=['POST', 'GET'])
-@login_required
-def solicitar_saque():
-    form = SaqueForm()
-    if form.validate_on_submit():
-        form.save(current_user.id)
-        return redirect(url_for('home'))
-    return render_template('solicitar_saque.html', form = form)
 
+
+@aplication.route('/home/extrato/')
+@login_required
+def extrato():
+    # Procura todos os depósitos do utilizador atual, do mais novo para o mais velho
+    historico = depositModel.query.filter_by(user_id=current_user.id).order_by(depositModel.created_at.desc()).all()
+    
+    return render_template('extrato.html', historico=historico)
+
+#############################################################################
+@aplication.route('/home/sacar/', methods=['GET', 'POST'])
+@login_required
+def sacar():
+
+    form = saqueForm()
+    if form.validate_on_submit():
+        if form.amount.data > current_user.saldo_actual:
+            flash("Erro: Saldo insuficiente para esta operação.", "danger")
+        elif form.amount.data < 2000: # Exemplo de saque mínimo
+            flash("Erro: O valor mínimo para saque é de 2000 Kz.", "warning")
+        else:
+            form.save(current_user.id)
+            flash("Saque solicitado com sucesso! Aguarde a aprovação.", "success")      
+    return render_template('sacar.html', form=form)
+
+
+#################################################################
+
+
+
+
+
+
+
+@aplication.route('/home/deposito/', methods=['GET', 'POST'])
+@login_required
+def deposito():
+    form = DepositForm()
+    if form.validate_on_submit():
+        obj = depositModel.query.filter_by(user_id=current_user.id, status='Pendente').first()
+        if obj:
+            flash('Você já tem um depósito pendente!', 'warning')
+        else:
+            form.save(current_user.id)
+            flash('Depósito enviado para análise!', 'success')
+        return redirect(url_for('home'))
+    return render_template('deposito.html', form=form)
 
 
 @aplication.route('/admin/perfil/')
@@ -191,63 +240,60 @@ def loginadmin():
     return render_template('loginAdmin.html', form = form)
 
 
+##########################################################
+#@aplication.route('/admin/users/', methods=['POST', 'GET'])
+#@login_required
+#def users():
+#    obj = userModel.query.all()                               
+#    return render_template('users.html', obj=obj)           #
+#############################################################
 
-@aplication.route('/admin/users/', methods=['POST', 'GET'])
+
+from flask import render_template
+from datetime import datetime, timedelta
+
+@aplication.route('/admin/usuarios')
 @login_required
 def users():
-    obj = userModel.query.all()
-    return render_template('users.html', obj=obj)
+    if not current_user.is_admin:
+        return redirect(url_for('adminperfil'))
+    page = request.args.get('page', 1, type=int)
+    per_page = 10 # Quantos usuários por página
+    usuarios_paginados = userModel.query.paginate(page=page, per_page=per_page, error_out=False)
+    # Lista que enviaremos para o template com os dados processados
+    lista_investidores = []
 
-
-
-@aplication.route('/deposito/', methods=['GET', 'POST'])
-@login_required
-def deposito():
-    form = DepositForm()
-    if form.validate_on_submit():
-        obj = depositModel.query.filter_by(user_id=current_user.id, status='Pendente').first()
-        if obj:
-            flash('Você já tem um depósito pendente!', 'warning')
-        else:
-            form.save(current_user.id)
-            flash('Depósito enviado para análise!', 'success')
-        return redirect(url_for('home'))
-    return render_template('deposito.html', form=form)
-
-@aplication.route('/home/extrato/')
-@login_required
-def extrato():
-    # Procura todos os depósitos do utilizador atual, do mais novo para o mais velho
-    historico = depositModel.query.filter_by(user_id=current_user.id).order_by(depositModel.created_at.desc()).all()
-    
-    return render_template('extrato.html', historico=historico)
-
-
-@aplication.route('/home/sacar/', methods=['GET', 'POST'])
-@login_required
-def sacar():
-    if request.method == 'POST':
-        valor = float(request.form.get('amount'))
-        iban = request.form.get('iban')
+    for user in usuarios_paginados.items:
+        # Busca o último upgrade de motor do usuário
+        motor = motorUpgradeModel.query.filter_by(user_id=user.id).order_by(motorUpgradeModel.data_upgrade.desc()).first()
         
-        # Validação Quântica de Saldo
-        if valor > current_user.saldo_actual:
-            flash("Erro: Saldo insuficiente para esta operação.", "danger")
-        elif valor < 500: # Exemplo de saque mínimo
-            flash("Erro: O valor mínimo para saque é de 500 Kz.", "warning")
-        else:
-            novo_saque = withdrawModel(
-                user_id=current_user.id,
-                amount=valor,
-                iban=iban,
-                status='Pendente'
-            )
-            base.session.add(novo_saque)
-            base.session.commit()
-            flash("Pedido de saque enviado com sucesso!", "success")
-            return redirect(url_for('extrato'))
-            
-    return render_template('sacar.html')
+        # Lógica de cálculo de progresso (Ciclo de 10 dias)
+        dias_passados = 0
+        progresso_percent = 0
+        nome_motor = motorModel.query.get(user.motor_id).nome if user.motor_id else "Padrão"
+        valor_investido = 0 # Você pode adaptar conforme sua lógica de preço de motor
+
+        if motor:
+            nome_motor = motor.motor.name
+            delta = datetime.now() - motor.data_upgrade
+            dias_passados = delta.days
+            if dias_passados > 30: dias_passados = 30
+            progresso_percent = (dias_passados / 31) * 100
+            # Se tiver uma coluna de preço no seu modelo, use-a aqui:
+            # valor_investido = motor.preco 
+
+        lista_investidores.append({
+            'id': user.id,
+            'nome': user.nome,
+            'email': user.email,
+            'motor': nome_motor,
+            'dias': dias_passados,
+            'progresso': progresso_percent,
+            'investimento': user.saldo_actual, # Usando a property que criamos antes
+            'status': 'Ativo' if dias_passados < 31 else 'Concluído'
+        })
+
+    return render_template('users.html', investidores=lista_investidores, paginacao=usuarios_paginados)
 
 
 @aplication.route('/admin/aprovar/')
@@ -297,7 +343,27 @@ def aprovar_deposito(deposito_id):
 
 
 
+@aplication.route('/admin/saques')
+@login_required
+def admin_saques():
+    if not current_user.is_admin:
+        return redirect(url_for('adminperfil'))
+    todos_saques = withdrawModel.query.order_by(withdrawModel.status.desc(), withdrawModel.created_at.desc()).all()
+    return render_template('admin_saques.html', saques=todos_saques)
 
+@aplication.route('/admin/pagar-saque/<int:saque_id>')
+@login_required
+def pagar_saque(saque_id):
+    if not current_user.is_admin:
+        return redirect(url_for('homePage'))
+
+    saque = withdrawModel.query.get_or_404(saque_id)
+    if saque.status == 'Pendente':
+        saque.status = 'Concluído' # O saldo já foi abatido na @property do User
+        base.session.commit()
+        flash(f"Saque de {saque.amount} Kz marcado como Pago!", "success")
+        
+    return redirect(url_for('admin_saques'))
 
 
 

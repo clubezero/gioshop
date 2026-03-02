@@ -51,33 +51,48 @@
                         <i class="bi bi-wallet2 text-primary display-4"></i>
                         <h3 class="fw-bold mt-2">Retirar <span class="text-primary">Lucros</span></h3>
                         <div class="badge balance-badge rounded-pill px-3 py-2 mt-2">
-                            Saldo Disponível: {{ "{:,.2f}".format(current_user.saldo_actual) }} Kz
+                            Saldo Disponível: {{ current_user.balance | format_currency }} Kz
                         </div>
                     </div>
 
                     <form action="" method="POST">
+                        {{ form.csrf_token }}
                         <div class="mb-3">
-                            <label class="form-label small text-muted">Quanto deseja sacar?</label>
+                            <label class="form-label small text-light">Quanto deseja sacar?</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-dark border-secondary text-white">Kz</span>
-                                <input type="number" name="amount" class="form-control" step="0.01" min="500" required>
+
+                                {{ form.amount(class="form-control", step="1000", min="2000", type="number",
+                                required=True) }}
+
                             </div>
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label small text-muted">Seu IBAN para transferência</label>
-                            <input type="text" name="iban" class="form-control" placeholder="AO06..." required>
-                            <div class="form-text text-muted" style="font-size: 0.7rem;">Verifique os dados com atenção.
+                            <label class="form-label small text-light">Seu IBAN para transferência</label>
+
+                            {{ form.iban(class="form-control", placeholder="AO06...", required=True) }}
+                            <div class="form-text text-danger" style="font-size: 0.7rem;">Verifique os dados com
+                                atenção.
                                 Erros de IBAN não podem ser revertidos.</div>
                         </div>
 
-                        <button type="submit" class="btn btn-withdraw btn-lg w-100 rounded-pill py-3 text-white">
-                            SOLICITAR LEVANTAMENTO
-                        </button>
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show small mt-2" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+                        {{form.btn(class="btn btn-withdraw btn-lg w-100 rounded-pill py-3 text-ligth")}}
+
                     </form>
 
                     <div class="mt-4 text-center">
-                        <a href="{{url_for('extrato')}}" class="text-muted small text-decoration-none">
+                        <a href="{{url_for('extrato')}}" class="text-primary small text-decoration-none">
                             <i class="bi bi-arrow-left"></i> Voltar ao extrato
                         </a>
                     </div>

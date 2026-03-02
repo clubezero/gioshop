@@ -28,20 +28,34 @@ class userModel(base.Model, UserMixin):
 
     @property
     def saldo_actual(self):
-        # Filtra apenas os depósitos com status 'Aprovado' e soma o campo 'amount'
-        total = base.session.query(func.sum(depositModel.amount)).filter(
+        # Soma de Depósitos Aprovados
+        total_depositos = base.session.query(func.sum(depositModel.amount)).filter(
             depositModel.user_id == self.id,
             depositModel.status == 'Aprovado'
-        ).scalar()
+        ).scalar() or 0.0
+
+        # Soma de Saques (Pendentes e Concluídos devem ser abatidos do saldo disponível)
+        total_saques = base.session.query(func.sum(withdrawModel.amount)).filter(
+            withdrawModel.user_id == self.id,
+            withdrawModel.status != 'Rejeitado' # Abatemos tudo que não foi negado
+        ).scalar() or 0.0
         
-        # Retorna o total ou 0.0 caso não existam depósitos aprovados
-        return total if total else 0.0
+        return total_depositos - total_saques
+    
     def get_id(self):
-        # Retorna o ID com o prefixo para a sessão
         return f"user_{self.id}"
     @property
     def is_admin(self):
         return False
+    
+
+    
+
+
+
+
+
+
 
 # 2. Tabela de Configuração de Motores
 class motorModel(base.Model):
@@ -82,6 +96,7 @@ class withdrawModel(base.Model):
     iban = base.Column(base.String(50), nullable=False) # Para onde o dinheiro será enviado
     status = base.Column(base.String, default='Pendente') # Pendente, Concluído, Rejeitado
     created_at = base.Column(base.DateTime, default=datetime.utcnow)
+    user = base.relationship('userModel', backref='meus_saques')
 
     def __repr__(self):
         return f'{self.amount}'

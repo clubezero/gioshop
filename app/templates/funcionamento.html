@@ -57,12 +57,12 @@
                     <span class="yield-badge">+75% Lucro</span>
                     <div class="card-body text-center">
                         <i class="bi bi-rocket-takeoff motor-icon mb-3 d-block"></i>
-                        <h5 class="fw-bold text-white">Nível {{obj[1].name}}</h5>
+                        <h5 class="fw-bold text-white">Nível {{obj[0].name}}</h5>
                         <p class="text-muted small">Inicie sua jornada de lucros reais.</p>
                         <hr class="border-secondary">
-                        <h3 class="fw-bold text-primary">{{obj[1].upgrade_cost}} Kz</h3>
+                        <h3 class="fw-bold text-primary">{{obj[0].upgrade_cost}} Kz</h3>
                         <p class="text-success fw-bold small">Retorno: 3.500 Kz em 10 dias</p>
-                        <a href="{{ url_for('funcionamentoId', id=obj[1].id) }}"
+                        <a href="{{ url_for('funcionamentoId', id=obj[0].id) }}"
                             class="btn btn-primary w-100 rounded-pill mt-3 shadow-sm">Upgrade Agora</a>
                     </div>
                 </div>
@@ -73,16 +73,47 @@
                     <span class="yield-badge">+75% Lucro</span>
                     <div class="card-body text-center">
                         <i class="bi bi-speedometer2 motor-icon mb-3 d-block"></i>
+                        <h5 class="fw-bold text-white">Nível {{obj[1].name}}</h5>
+                        <p class="text-muted small">Aumente a pressão do seu motor.</p>
+                        <hr class="border-secondary">
+                        <h3 class="fw-bold text-primary">{{obj[1].upgrade_cost}} Kz</h3>
+                        <p class="text-success fw-bold small">Retorno: 30.000.00 Kz em 31 dias</p>
+                        <a href="{{ url_for('funcionamentoId', id=obj[1].id) }}"
+                            class="btn btn-primary w-100 rounded-pill mt-3">Upgrade Agora</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card level-card h-100 p-4 position-relative">
+                    <span class="yield-badge">+75% Lucro</span>
+                    <div class="card-body text-center">
+                        <i class="bi bi-speedometer2 motor-icon mb-3 d-block"></i>
                         <h5 class="fw-bold text-white">Nível {{obj[2].name}}</h5>
                         <p class="text-muted small">Aumente a pressão do seu motor.</p>
                         <hr class="border-secondary">
                         <h3 class="fw-bold text-primary">{{obj[2].upgrade_cost}} Kz</h3>
-                        <p class="text-success fw-bold small">Retorno: 6.125 Kz em 10 dias</p>
+                        <p class="text-success fw-bold small">Retorno: 35.000.00 Kz em 31 dias</p>
                         <a href="{{ url_for('funcionamentoId', id=obj[2].id) }}"
                             class="btn btn-primary w-100 rounded-pill mt-3">Upgrade Agora</a>
                     </div>
                 </div>
             </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card level-card h-100 p-4 position-relative">
+                    <span class="yield-badge">+75% Lucro</span>
+                    <div class="card-body text-center">
+                        <i class="bi bi-speedometer2 motor-icon mb-3 d-block"></i>
+                        <h5 class="fw-bold text-white">Nível {{obj[4].name}}</h5>
+                        <p class="text-muted small">Aumente a pressão do seu motor.</p>
+                        <hr class="border-secondary">
+                        <h3 class="fw-bold text-primary">{{obj[4].upgrade_cost}} Kz</h3>
+                        <p class="text-success fw-bold small">Retorno: 50.000.00 Kz em 10 dias</p>
+                        <a href="{{ url_for('funcionamentoId', id=obj[4].id) }}"
+                            class="btn btn-primary w-100 rounded-pill mt-3">Upgrade Agora</a>
+                    </div>
+                </div>
+            </div>
+
 
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card level-card h-100 p-4 bg-dark position-relative border-warning">
@@ -93,7 +124,7 @@
                         <p class="text-white-50 small">O ápice da tecnologia gioShop.</p>
                         <hr class="border-secondary">
                         <h3 class="fw-bold text-warning">{{obj[5].upgrade_cost}} Kz</h3>
-                        <p class="text-success fw-bold small">Retorno: 12.250 Kz em 10 dias</p>
+                        <p class="text-success fw-bold small">Retorno: 150.000.00 Kz em 10 dias</p>
                         <a href="{{ url_for('funcionamentoId', id=obj[5].id) }}"
                             class="btn btn-gradient w-100 rounded-pill mt-3">Alcançar Ápice</a>
                     </div>

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>gioShop Admin | Gestão de Saídas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #0b0e11;
+            color: #e9ecef;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .admin-card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 1.5rem;
+        }
+
+        .table {
+            color: #e9ecef;
+            border-color: #30363d;
+        }
+
+        .iban-box {
+            background: #0d1117;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #0dcaf0;
+            border: 1px dashed #30363d;
+        }
+
+        .status-concluido {
+            color: #198754;
+            background: rgba(25, 135, 84, 0.1);
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+
+        .status-pendente {
+            color: #ffc107;
+            background: rgba(255, 193, 7, 0.1);
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+
+        .btn-pay {
+            background: linear-gradient(45deg, #0d6efd, #0dcaf0);
+            border: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container py-5">
+        <div class="row mb-4 align-items-center">
+            <div class="col">
+                <h2 class="fw-bold"><i class="bi bi-cash-stack text-primary me-2"></i>Pedidos de <span
+                        class="text-primary">Levantamento</span></h2>
+                <p class="text-muted small">Valide os dados e confirme após realizar a transferência bancária.</p>
+            </div>
+            <div class="col-auto">
+                <a href="#" class="btn btn-outline-secondary rounded-pill btn-sm">Voltar aos
+                    Depósitos</a>
+            </div>
+        </div>
+
+        <div class="admin-card p-4 shadow-lg">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Utilizador</th>
+                            <th>Valor Solicitado</th>
+                            <th>IBAN de Destino</th>
+                            <th>Data</th>
+                            <th>Estado</th>
+                            <th class="text-end">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in saques %}
+                        <tr>
+                            <td>
+                                <div class="fw-bold text-white">{{ s.user.nome }}</div>
+                                <small class="text-muted">ID: #{{ s.user_id }}</small>
+                            </td>
+                            <td class="text-danger fw-bold">- {{ "{:,.2f}".format(s.amount) }} Kz</td>
+                            <td>
+                                <span class="iban-box">{{ s.iban }}</span>
+                            </td>
+                            <td class="small text-muted">{{ s.created_at.strftime('%d/%m/%Y %H:%M') }}</td>
+                            <td>
+                                <span class="status-{{ s.status | lower }}">{{ s.status }}</span>
+                            </td>
+                            <td class="text-end">
+                                {% if s.status == 'Pendente' %}
+                                <a href="{{ url_for('pagar_saque', saque_id=s.id) }}"
+                                    class="btn btn-pay btn-sm rounded-pill px-3 shadow-sm"
+                                    onclick="return confirm('Confirmas que já fizeste a transferência para este IBAN?')">
+                                    CONFIRMAR PAGAMENTO
+                                </a>
+                                {% else %}
+                                <i class="bi bi-check-circle-fill text-success fs-5"></i>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

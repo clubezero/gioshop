@@ -151,3 +151,16 @@ class Investment(base.Model):
 
     def calculate_yield(self):
         return self.amount * 1.75
+
+
+
+
+
+
+
+
+
+
+                if (upM != null) {
+            
+        }  

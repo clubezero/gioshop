@@ -1,4 +1,7 @@
 import os
+
+from flask import flash
+from flask_login import current_user
 from app import base, bcrypt,aplication
 from app.models import depositModel, motorUpgradeModel, pixModel, userModel, admiModel, motorModel,withdrawModel
 from flask_wtf import FlaskForm
@@ -114,20 +117,37 @@ class PixForm(FlaskForm):
         base.session.commit()
 
 
-class SaqueForm(FlaskForm):
-    montante = StringField('Valor do Saque', validators=[data_required()])
-    detalhes = StringField('Detalhes do Banco', validators=[data_required()])
-    btn = SubmitField('Solicitar Saque')
+class saqueForm(FlaskForm):
+    amount = FloatField('Valor do Saque (Kz)', validators=[
+        DataRequired(message="Informe o valor"),
+        NumberRange(min=2000, message="O saque mínimo é de 2000 Kz")
+    ])
+    iban = StringField('IBAN para Recebimento', validators=[DataRequired(message="O IBAN é obrigatório")])
+    btn = SubmitField('SOLICITAR SAQUE')
 
-    def save(self, id_user):
-        saque = withdrawModel(
-            user_id = id_user,
-            amount = self.montante.data,
-            bank_details = self.detalhes.data
-        )
-
-        base.session.add(saque)
-        base.session.commit()
+    def save(self, user):
+        from app.models import userModel
+        user = userModel.query.get(user)
+        if user:
+            if self.amount.data > user.saldo_actual:
+                return False, "Erro: Saldo insuficiente para esta operação."
+        
+            if self.amount.data < 2000:
+                return False, "Erro: O valor mínimo para saque é de 2000 Kz."
+            saque = withdrawModel(
+                user_id = user.id,
+                amount = self.amount.data,
+                iban = self.iban.data,
+                status = 'Pendente'
+            )
+            
+            try:
+                base.session.add(saque)
+                base.session.commit()
+                return True, "Pedido de saque enviado com sucesso!"
+            except Exception as e:
+                base.session.rollback()
+                return False, "Erro técnico ao processar saque."
 
 
 class UpgradeMotorForm(FlaskForm):

@@ -20,7 +20,7 @@ aplication.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 base = SQLAlchemy(aplication)
 mig = Migrate(aplication, base)
 Login_manager = LoginManager(aplication)
-Login_manager.login_view = 'home'
+Login_manager.login_view = 'login'
 bcrypt = Bcrypt(aplication)
 
 @Login_manager.user_loader
