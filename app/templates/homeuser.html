@@ -125,7 +125,7 @@
                     </div>
                     <div class="col-6 col-md-4">
                         <div class="stat-box">
-                            <small class="text-muted d-block">Pendente</small>
+                            <small class="text-warning d-block">Pendente</small>
                             <span class="fw-bold fs-5 text-warning"><span class="fw-bold fs-5 text-warning">
                                     {% if withdraw and withdraw.amount %}
                                     {{ withdraw.amount | format_currency }}
@@ -133,14 +133,13 @@
                                     0,00
                                     {% endif %}
                                     Kz
-                                </span> Kz</span>
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="stat-box bg-success bg-opacity-10 border-success border-opacity-25">
-                            <small class="text-muted d-block text-success">Total Sacado</small>
+                            <small class="text-success d-block text-success">Total Sacado</small>
 
-                            <span class="fw-bold fs-5 text-warning">
+                            <span class="fw-bold fs-5 text-success">
                                 {% if withdrawC %}
                                 {{ withdrawC.amount | format_currency }}
                                 {% else %}

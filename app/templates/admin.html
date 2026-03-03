@@ -40,7 +40,7 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
-                    <h1 class="h2 fw-bold">Visão Geral do Ecossistema</h1>
+                    <h1 class="h2 fw-bold text-black">Visão Geral do Ecossistema</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2">Exportar
                             Relatórios</button>
@@ -50,7 +50,7 @@
                 <div class="row g-4 mb-5">
                     <div class="col-md-3">
                         <div class="admin-card shadow-sm p-4 text-center">
-                            <small class="text-muted d-block text-uppercase fw-bold">Capital em Ciclo</small>
+                            <small class="text-black d-block text-uppercase fw-bold">Capital em Ciclo</small>
                             <h3 class="fw-bold text-primary">{{ cp | format_currency }} Kz</td>
                             </h3>
                             <div class="progress mt-2" style="height: 5px;">
@@ -60,22 +60,22 @@
                     </div>
                     <div class="col-md-3">
                         <div class="admin-card shadow-sm p-4 text-center">
-                            <small class="text-muted d-block text-uppercase fw-bold">Motores Activos</small>
+                            <small class="text-black d-block text-uppercase fw-bold">Motores Activos</small>
                             <h3 class="fw-bold text-dark">342</h3>
                             <span class="text-success small"><i class="bi bi-arrow-up"></i> 12% hoje</span>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="admin-card shadow-sm p-4 text-center">
-                            <small class="text-muted d-block text-uppercase fw-bold">Saques Pendentes</small>
-                            <h3 class="fw-bold text-black">12</h3>
+                            <small class="text-black d-block text-uppercase fw-bold">Saques Pendentes</small>
+                            <h3 class="fw-bold text-warning">{{sq | length}}</h3>
                             <a href="{{url_for('admin_saques')}}"
                                 class="btn btn-link btn-sm text-decoration-none p-0">Revisar Agora</a>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="admin-card shadow-sm p-4 text-center">
-                            <small class="text-muted d-block text-uppercase fw-bold">Depositos Pendentes</small>
+                            <small class="text-black d-block text-uppercase fw-bold">Depositos Pendentes</small>
                             <h3 class="fw-bold text-danger">{{dp|length}}</h3>
                             <a href="{{url_for('aprovar')}}"
                                 class="btn btn-link btn-sm text-decoration-none p-0">Revisar Agora</a>

@@ -84,20 +84,27 @@ def funcionamentoId(id):
     obj = motorModel.query.get_or_404(id)
     form = UpgradeMotorForm()
     if form.validate_on_submit():
-        if current_user.saldo_atual >= obj.upgrade_cost:
+        if current_user.saldo_actual >= obj.upgrade_cost:
             try:
-                current_user.saldo_atual -= obj.upgrade_cost
-                form.save(current_user.id, obj.id)  # Salva o upgrade no histórico           
-                flash(f'Upgrade do {obj.nome} realizado com sucesso!', 'success')
+                debit = withdrawModel(
+                    user_id=current_user.id, 
+                    amount=obj.upgrade_cost,
+                    status='Concluído')
+                base.session.add(debit)
+                current_user.motor_id = obj.id
+                form.save(current_user.id, obj.id)  # Salva o upgrade no histórico
+                base.session.commit()          
+                flash(f'Upgrade do {obj.name} realizado com sucesso!', 'success')
                 return redirect(url_for('funcionamentoId', id=id))
-            
+
             except Exception as e:
-                flash('Erro ao processar upgrade. Tente novamente.', 'danger')
+                flash(f'Erro ao processar upgrade. Tente novamente. {e}', 'danger')
         else:
             flash('Saldo insuficiente para realizar o upgrade.', 'danger')
             return redirect(url_for('funcionamentoId', id=id))
-
     return render_template('motorUpgarde.html', form=form, obj=obj)
+
+
 
 
 
@@ -214,7 +221,9 @@ def deposito():
 def adminperfil():
     dp= depositModel.query.filter_by(status='Pendente').all()
     cp = sum(deposit.amount for deposit in depositModel.query.filter_by(status='Aprovado').all())
-    return render_template('admin.html', dp=dp, cp=cp)
+
+    sq = withdrawModel.query.filter_by(status='Pendente').all() 
+    return render_template('admin.html', dp=dp, cp=cp, sq=sq)
 
 
 
@@ -258,19 +267,14 @@ def users():
     if not current_user.is_admin:
         return redirect(url_for('adminperfil'))
     page = request.args.get('page', 1, type=int)
-    per_page = 10 # Quantos usuários por página
+    per_page = 10
     usuarios_paginados = userModel.query.paginate(page=page, per_page=per_page, error_out=False)
-    # Lista que enviaremos para o template com os dados processados
     lista_investidores = []
-
     for user in usuarios_paginados.items:
-        # Busca o último upgrade de motor do usuário
         motor = motorUpgradeModel.query.filter_by(user_id=user.id).order_by(motorUpgradeModel.data_upgrade.desc()).first()
-        
-        # Lógica de cálculo de progresso (Ciclo de 10 dias)
         dias_passados = 0
         progresso_percent = 0
-        nome_motor = motorModel.query.get(user.motor_id).nome if user.motor_id else "Padrão"
+        nome_motor = motorModel.query.get(user.motor_id).name if user.motor_id else "Padrão"
         valor_investido = 0 # Você pode adaptar conforme sua lógica de preço de motor
 
         if motor:
@@ -280,7 +284,7 @@ def users():
             if dias_passados > 30: dias_passados = 30
             progresso_percent = (dias_passados / 31) * 100
             # Se tiver uma coluna de preço no seu modelo, use-a aqui:
-            # valor_investido = motor.preco 
+            valor_investido = motor.motor.upgrade_cost # Exemplo, adapte conforme seu modelo 
 
         lista_investidores.append({
             'id': user.id,
@@ -303,7 +307,7 @@ def aprovar():
     dp= depositModel.query.filter_by(status='Pendente').all()
     if not current_user.is_admin:
         flash("Acesso negado ao núcleo do sistema.", "danger")
-        return redirect(url_for('adminperfil'))
+        return redirect(url_for('homePage'))
     return render_template('admin_panel.html', obj=userModel.query.all(), depositos=depositos, dp=dp)
 
 @aplication.route('/admin/aprovar/<int:deposito_id>')
@@ -312,7 +316,7 @@ def aprovar_deposito(deposito_id):
 
     if not current_user.is_admin: # Certifique-se de ter o campo 'is_admin' no modelo User
         flash("Acesso negado ao núcleo do sistema.", "danger")
-        return redirect(url_for('home'))
+        return redirect(url_for('homePage'))
 
     deposito = depositModel.query.get_or_404(deposito_id)
     
