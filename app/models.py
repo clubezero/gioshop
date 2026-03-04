@@ -85,7 +85,6 @@ class depositModel(base.Model):
     proof_url = base.Column(base.String, nullable=True)
     status = base.Column(base.String, default='Pendente') 
     created_at = base.Column(base.DateTime, default=datetime.utcnow)
-    user = base.relationship('userModel', backref='meus_depositos')
 
 # 4. Tabela de Saques
 class withdrawModel(base.Model):
@@ -96,7 +95,6 @@ class withdrawModel(base.Model):
     iban = base.Column(base.String(50), nullable=True, default="MEU_IBAN") # Para onde o dinheiro será enviado
     status = base.Column(base.String, default='Pendente') # Pendente, Concluído, Rejeitado
     created_at = base.Column(base.DateTime, default=datetime.utcnow)
-    user = base.relationship('userModel', backref='meus_saques')
 
     def __repr__(self):
         return f'{self.amount}'

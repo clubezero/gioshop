@@ -54,7 +54,7 @@
 
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card level-card h-100 p-4 border-primary border-opacity-25 position-relative">
-                    <span class="yield-badge">+75% Lucro</span>
+                    <span class="yield-badge text-warning">+100% Lucro</span>
                     <div class="card-body text-center">
                         <i class="bi bi-rocket-takeoff motor-icon mb-3 d-block"></i>
                         <h5 class="fw-bold text-white">Nível {{obj[0].name}}</h5>
@@ -63,14 +63,14 @@
                         <h3 class="fw-bold text-primary">{{obj[0].upgrade_cost | format_currency}} AOA</h3>
                         <p class="text-success fw-bold small">Retorno: 10.000 Kz em 10 dias</p>
                         <a href="{{ url_for('funcionamentoId', id=obj[0].id) }}"
-                            class="btn btn-primary w-100 rounded-pill mt-3 shadow-sm">Upgrade Agora</a>
+                            class="btn btn-primary w-100 rounded-pill mt-3 shadow-sm">Investir Agora</a>
                     </div>
                 </div>
             </div>
 
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card level-card h-100 p-4 position-relative">
-                    <span class="yield-badge">+75% Lucro</span>
+                    <span class="yield-badge text-warning">+100% Lucro</span>
                     <div class="card-body text-center">
                         <i class="bi bi-speedometer2 motor-icon mb-3 d-block"></i>
                         <h5 class="fw-bold text-white">Nível {{obj[1].name}}</h5>
@@ -79,13 +79,13 @@
                         <h3 class="fw-bold text-primary">{{obj[1].upgrade_cost | format_currency}} AOA</h3>
                         <p class="text-success fw-bold small">Retorno: 15.000 Kz em 31 dias</p>
                         <a href="{{ url_for('funcionamentoId', id=obj[1].id) }}"
-                            class="btn btn-primary w-100 rounded-pill mt-3">Upgrade Agora</a>
+                            class="btn btn-primary w-100 rounded-pill mt-3">Investir Agora</a>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card level-card h-100 p-4 position-relative">
-                    <span class="yield-badge">+75% Lucro</span>
+                    <span class="yield-badge ">+100% Lucro</span>
                     <div class="card-body text-center">
                         <i class="bi bi-speedometer2 motor-icon mb-3 d-block"></i>
                         <h5 class="fw-bold text-white">Nível {{obj[2].name}}</h5>
@@ -94,13 +94,13 @@
                         <h3 class="fw-bold text-primary">{{obj[2].upgrade_cost | format_currency}} AOA</h3>
                         <p class="text-success fw-bold small">Retorno: 25.000 Kz em 31 dias</p>
                         <a href="{{ url_for('funcionamentoId', id=obj[2].id) }}"
-                            class="btn btn-primary w-100 rounded-pill mt-3">Upgrade Agora</a>
+                            class="btn btn-primary w-100 rounded-pill mt-3">Investir Agora</a>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card level-card h-100 p-4 position-relative">
-                    <span class="yield-badge">+75% Lucro</span>
+                    <span class="yield-badge text-primary">+100% Lucro</span>
                     <div class="card-body text-center">
                         <i class="bi bi-speedometer2 motor-icon mb-3 d-block"></i>
                         <h5 class="fw-bold text-white">Nível {{obj[3].name}}</h5>
@@ -109,7 +109,7 @@
                         <h3 class="fw-bold text-primary">{{obj[3].upgrade_cost | format_currency}} AOA</h3>
                         <p class="text-success fw-bold small">Retorno: 70.000 Kz em 31 dias</p>
                         <a href="{{ url_for('funcionamentoId', id=obj[3].id) }}"
-                            class="btn btn-primary w-100 rounded-pill mt-3">Upgrade Agora</a>
+                            class="btn btn-primary w-100 rounded-pill mt-3">Investir Agora</a>
                     </div>
                 </div>
             </div>
@@ -117,7 +117,7 @@
 
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card level-card h-100 p-4 bg-dark position-relative border-warning">
-                    <span class="yield-badge">+75% Lucro</span>
+                    <span class="yield-badge text-danger">+100% Lucro</span>
                     <div class="card-body text-center">
                         <i class="bi bi-star-fill motor-icon mb-3 d-block text-warning"></i>
                         <h5 class="fw-bold text-warning">Nível {{obj[4].name}}</h5>
