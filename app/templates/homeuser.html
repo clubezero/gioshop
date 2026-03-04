@@ -58,14 +58,19 @@
                 <div class="card overflow-hidden text-center">
                     <div class="profile-header"></div>
                     <div class="card-body p-4">
-                        <div class="profile-avatar-wrapper mb-3">
 
+
+
+                        <div class="profile-avatar-wrapper mb-3">
                             <img src="{{ url_for('static', filename='data/img/post/' + (current_user.avatar if current_user.avatar else 'default.png')) }}"
                                 class="profile-avatar shadow"
                                 style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;"
-                                alt="Avatar de {{ current_user.nome }}">
-
+                                alt="Avatar de {{ current_user.nome }}"
+                                onerror="this.onerror=null;this.src='{{ url_for('static', filename='data/img/post/default.png') }}';">
                         </div>
+
+
+
                         <h4 class="text-light fw-bold mb-1">{{current_user.nome}} {{current_user.sobrenome}}</h4>
 
                         <div class="d-grid">
