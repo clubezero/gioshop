@@ -90,7 +90,7 @@
                         {% for s in saques %}
                         <tr>
                             <td>
-                                <div class="fw-bold text-white">{{ s.user.nome }}</div>
+                                <div class="fw-bold text-white">{{ s.beneficiario.nome }}</div>
                                 <small class="text-muted">ID: #{{ s.user_id }}</small>
                             </td>
                             <td class="text-danger fw-bold">- {{ "{:,.2f}".format(s.amount) }} Kz</td>
